@@ -1,1 +1,46 @@
-.idea
+# Compiled class files
+*.class
+*.jar
+*.war
+*.ear
+
+# Build directories
+/build/
+/target/
+/out/
+
+# Logs
+*.log
+
+# IDE specific
+/.idea/
+/*.iml
+/.vscode/
+/nbproject/private/
+/*.ipr
+/*.iws
+
+# Tomcat or local deployment directories
+/webapps/
+/work/
+/temp/
+/logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Maven / Gradle
+.mvn/
+.gradle/
+!gradle/wrapper/gradle-wrapper.jar
+build/
+
+# Node.js / frontend if any
+node_modules/
+dist/
+
+# Environment / secret files
+.env
+*.properties
+`
