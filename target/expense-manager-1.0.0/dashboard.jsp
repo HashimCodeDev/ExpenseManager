@@ -468,25 +468,7 @@ if (user == null) {
             font-size: 0.8rem;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
 
-        .summary-card {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .summary-card:nth-child(1) { animation-delay: 0.1s; }
-        .summary-card:nth-child(2) { animation-delay: 0.2s; }
-        .summary-card:nth-child(3) { animation-delay: 0.3s; }
 
         /* Responsive Design */
         @media (max-width: 768px) {
