@@ -40,7 +40,7 @@
             if (description != null && amountStr != null && category != null && dateStr != null) {
                 try {
                     double amount = Double.parseDouble(amountStr);
-                    Date date = Date.valueOf(dateStr);
+                    java.sql.Date date = java.sql.Date.valueOf(dateStr);
                     
                     Connection conn = DatabaseConnection.getConnection();
                     String sql = "INSERT INTO expenses (description, amount, category, date) VALUES (?, ?, ?, ?)";
