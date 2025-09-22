@@ -81,14 +81,20 @@ List<Income> incomes = incomeDAO.getIncomeByUser(user.getId());
 <html>
 <head>
     <title>Income - Expense Manager</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/modern-style.css">
 </head>
 <body>
+    <div class="background-pattern"></div>
     <div class="container">
         <header>
-            <h1>Income Management</h1>
+            <h1>Expense Manager</h1>
             <div class="user-info">
-                Welcome, <%= user.getUsername() %>! 
+                <div class="user-avatar"><%= user.getUsername().substring(0, 1).toUpperCase() %></div>
+                <span>Welcome, <%= user.getUsername() %>!</span>
                 <a href="logout.jsp" class="logout-btn">Logout</a>
             </div>
         </header>
@@ -101,11 +107,11 @@ List<Income> incomes = incomeDAO.getIncomeByUser(user.getId());
         </nav>
         
         <% if (!message.isEmpty()) { %>
-            <div class="<%= message.contains("successfully") ? "success" : "error" %>"><%= message %></div>
+            <div class="alert <%= message.contains("successfully") ? "alert-success" : "alert-danger" %>"><%= message %></div>
         <% } %>
         
-        <div class="form-section">
-            <h2><%= "edit".equals(action) ? "Edit Income" : "Add New Income" %></h2>
+        <div class="content-section">
+            <h2>💰 <%= "edit".equals(action) ? "Edit Income" : "Add New Income" %></h2>
             <%
             Income editIncome = null;
             if ("edit".equals(action)) {
@@ -128,30 +134,48 @@ List<Income> incomes = incomeDAO.getIncomeByUser(user.getId());
                     <input type="hidden" name="id" value="<%= editIncome.getId() %>">
                 <% } %>
                 
-                <input type="text" name="description" placeholder="Description" 
-                       value="<%= editIncome != null ? editIncome.getDescription() : "" %>" required>
-                <input type="number" name="amount" step="0.01" placeholder="Amount" 
-                       value="<%= editIncome != null ? editIncome.getAmount() : "" %>" required>
-                <select name="category" required>
-                    <option value="">Select Category</option>
-                    <option value="Job" <%= editIncome != null && "Job".equals(editIncome.getCategory()) ? "selected" : "" %>>Job</option>
-                    <option value="Freelance" <%= editIncome != null && "Freelance".equals(editIncome.getCategory()) ? "selected" : "" %>>Freelance</option>
-                    <option value="Investment" <%= editIncome != null && "Investment".equals(editIncome.getCategory()) ? "selected" : "" %>>Investment</option>
-                    <option value="Business" <%= editIncome != null && "Business".equals(editIncome.getCategory()) ? "selected" : "" %>>Business</option>
-                    <option value="Gift" <%= editIncome != null && "Gift".equals(editIncome.getCategory()) ? "selected" : "" %>>Gift</option>
-                    <option value="Other" <%= editIncome != null && "Other".equals(editIncome.getCategory()) ? "selected" : "" %>>Other</option>
-                </select>
-                <input type="date" name="date" 
-                       value="<%= editIncome != null ? editIncome.getDate() : "" %>" required>
-                <button type="submit"><%= "edit".equals(action) ? "Update Income" : "Add Income" %></button>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="description" class="form-control" placeholder="Enter description" 
+                           value="<%= editIncome != null ? editIncome.getDescription() : "" %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" name="amount" step="0.01" class="form-control" placeholder="0.00" 
+                           value="<%= editIncome != null ? editIncome.getAmount() : "" %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Job" <%= editIncome != null && "Job".equals(editIncome.getCategory()) ? "selected" : "" %>>Job</option>
+                        <option value="Freelance" <%= editIncome != null && "Freelance".equals(editIncome.getCategory()) ? "selected" : "" %>>Freelance</option>
+                        <option value="Investment" <%= editIncome != null && "Investment".equals(editIncome.getCategory()) ? "selected" : "" %>>Investment</option>
+                        <option value="Business" <%= editIncome != null && "Business".equals(editIncome.getCategory()) ? "selected" : "" %>>Business</option>
+                        <option value="Gift" <%= editIncome != null && "Gift".equals(editIncome.getCategory()) ? "selected" : "" %>>Gift</option>
+                        <option value="Other" <%= editIncome != null && "Other".equals(editIncome.getCategory()) ? "selected" : "" %>>Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" name="date" class="form-control"
+                           value="<%= editIncome != null ? editIncome.getDate() : "" %>" required>
+                </div>
+                
+                <button type="submit" class="btn btn-success">
+                    <%= "edit".equals(action) ? "Update Income" : "Add Income" %>
+                </button>
                 <% if ("edit".equals(action)) { %>
                     <a href="income.jsp" class="btn btn-secondary">Cancel</a>
                 <% } %>
             </form>
         </div>
         
-        <div class="income-section">
-            <h2>Your Income</h2>
+        <div class="content-section">
+            <h2>💰 Your Income</h2>
             <table>
                 <thead>
                     <tr>
@@ -172,12 +196,12 @@ List<Income> incomes = incomeDAO.getIncomeByUser(user.getId());
                         <td><%= income.getDate() %></td>
                         <td><%= income.getDescription() %></td>
                         <td><%= income.getCategory() %></td>
-                        <td>$<%= String.format("%.2f", income.getAmount()) %></td>
+                        <td class="positive">$<%= String.format("%.2f", income.getAmount()) %></td>
                         <td>
-                            <a href="income.jsp?action=edit&id=<%= income.getId() %>" class="btn btn-sm">Edit</a>
+                            <a href="income.jsp?action=edit&id=<%= income.getId() %>" class="btn btn-info" style="margin-right: 8px;">Edit</a>
                             <a href="income.jsp?action=delete&id=<%= income.getId() %>" 
                                onclick="return confirm('Are you sure you want to delete this income?')" 
-                               class="btn btn-sm btn-danger">Delete</a>
+                               class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                     <%
@@ -185,9 +209,9 @@ List<Income> incomes = incomeDAO.getIncomeByUser(user.getId());
                     %>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td colspan="3"><strong>Total:</strong></td>
-                        <td><strong>$<%= String.format("%.2f", total) %></strong></td>
+                    <tr style="background: var(--light); font-weight: 600;">
+                        <td colspan="3">Total Income:</td>
+                        <td class="positive">$<%= String.format("%.2f", total) %></td>
                         <td></td>
                     </tr>
                 </tfoot>

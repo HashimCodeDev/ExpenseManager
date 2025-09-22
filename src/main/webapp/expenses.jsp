@@ -81,14 +81,20 @@ List<Expense> expenses = expenseDAO.getExpensesByUser(user.getId());
 <html>
 <head>
     <title>Expenses - Expense Manager</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/modern-style.css">
 </head>
 <body>
+    <div class="background-pattern"></div>
     <div class="container">
         <header>
-            <h1>Expense Management</h1>
+            <h1>Expense Manager</h1>
             <div class="user-info">
-                Welcome, <%= user.getUsername() %>! 
+                <div class="user-avatar"><%= user.getUsername().substring(0, 1).toUpperCase() %></div>
+                <span>Welcome, <%= user.getUsername() %>!</span>
                 <a href="logout.jsp" class="logout-btn">Logout</a>
             </div>
         </header>
@@ -101,11 +107,11 @@ List<Expense> expenses = expenseDAO.getExpensesByUser(user.getId());
         </nav>
         
         <% if (!message.isEmpty()) { %>
-            <div class="<%= message.contains("successfully") ? "success" : "error" %>"><%= message %></div>
+            <div class="alert <%= message.contains("successfully") ? "alert-success" : "alert-danger" %>"><%= message %></div>
         <% } %>
         
-        <div class="form-section">
-            <h2><%= "edit".equals(action) ? "Edit Expense" : "Add New Expense" %></h2>
+        <div class="content-section">
+            <h2>💳 <%= "edit".equals(action) ? "Edit Expense" : "Add New Expense" %></h2>
             <%
             Expense editExpense = null;
             if ("edit".equals(action)) {
@@ -128,31 +134,49 @@ List<Expense> expenses = expenseDAO.getExpensesByUser(user.getId());
                     <input type="hidden" name="id" value="<%= editExpense.getId() %>">
                 <% } %>
                 
-                <input type="text" name="description" placeholder="Description" 
-                       value="<%= editExpense != null ? editExpense.getDescription() : "" %>" required>
-                <input type="number" name="amount" step="0.01" placeholder="Amount" 
-                       value="<%= editExpense != null ? editExpense.getAmount() : "" %>" required>
-                <select name="category" required>
-                    <option value="">Select Category</option>
-                    <option value="Food" <%= editExpense != null && "Food".equals(editExpense.getCategory()) ? "selected" : "" %>>Food</option>
-                    <option value="Transport" <%= editExpense != null && "Transport".equals(editExpense.getCategory()) ? "selected" : "" %>>Transport</option>
-                    <option value="Entertainment" <%= editExpense != null && "Entertainment".equals(editExpense.getCategory()) ? "selected" : "" %>>Entertainment</option>
-                    <option value="Bills" <%= editExpense != null && "Bills".equals(editExpense.getCategory()) ? "selected" : "" %>>Bills</option>
-                    <option value="Healthcare" <%= editExpense != null && "Healthcare".equals(editExpense.getCategory()) ? "selected" : "" %>>Healthcare</option>
-                    <option value="Shopping" <%= editExpense != null && "Shopping".equals(editExpense.getCategory()) ? "selected" : "" %>>Shopping</option>
-                    <option value="Other" <%= editExpense != null && "Other".equals(editExpense.getCategory()) ? "selected" : "" %>>Other</option>
-                </select>
-                <input type="date" name="date" 
-                       value="<%= editExpense != null ? editExpense.getDate() : "" %>" required>
-                <button type="submit"><%= "edit".equals(action) ? "Update Expense" : "Add Expense" %></button>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" name="description" class="form-control" placeholder="Enter description" 
+                           value="<%= editExpense != null ? editExpense.getDescription() : "" %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="number" name="amount" step="0.01" class="form-control" placeholder="0.00" 
+                           value="<%= editExpense != null ? editExpense.getAmount() : "" %>" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <option value="Food" <%= editExpense != null && "Food".equals(editExpense.getCategory()) ? "selected" : "" %>>Food</option>
+                        <option value="Transport" <%= editExpense != null && "Transport".equals(editExpense.getCategory()) ? "selected" : "" %>>Transport</option>
+                        <option value="Entertainment" <%= editExpense != null && "Entertainment".equals(editExpense.getCategory()) ? "selected" : "" %>>Entertainment</option>
+                        <option value="Bills" <%= editExpense != null && "Bills".equals(editExpense.getCategory()) ? "selected" : "" %>>Bills</option>
+                        <option value="Healthcare" <%= editExpense != null && "Healthcare".equals(editExpense.getCategory()) ? "selected" : "" %>>Healthcare</option>
+                        <option value="Shopping" <%= editExpense != null && "Shopping".equals(editExpense.getCategory()) ? "selected" : "" %>>Shopping</option>
+                        <option value="Other" <%= editExpense != null && "Other".equals(editExpense.getCategory()) ? "selected" : "" %>>Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" name="date" class="form-control"
+                           value="<%= editExpense != null ? editExpense.getDate() : "" %>" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <%= "edit".equals(action) ? "Update Expense" : "Add Expense" %>
+                </button>
                 <% if ("edit".equals(action)) { %>
                     <a href="expenses.jsp" class="btn btn-secondary">Cancel</a>
                 <% } %>
             </form>
         </div>
         
-        <div class="expenses-section">
-            <h2>Your Expenses</h2>
+        <div class="content-section">
+            <h2>💳 Your Expenses</h2>
             <table>
                 <thead>
                     <tr>
@@ -173,12 +197,12 @@ List<Expense> expenses = expenseDAO.getExpensesByUser(user.getId());
                         <td><%= expense.getDate() %></td>
                         <td><%= expense.getDescription() %></td>
                         <td><%= expense.getCategory() %></td>
-                        <td>$<%= String.format("%.2f", expense.getAmount()) %></td>
+                        <td class="negative">$<%= String.format("%.2f", expense.getAmount()) %></td>
                         <td>
-                            <a href="expenses.jsp?action=edit&id=<%= expense.getId() %>" class="btn btn-sm">Edit</a>
+                            <a href="expenses.jsp?action=edit&id=<%= expense.getId() %>" class="btn btn-info" style="margin-right: 8px;">Edit</a>
                             <a href="expenses.jsp?action=delete&id=<%= expense.getId() %>" 
                                onclick="return confirm('Are you sure you want to delete this expense?')" 
-                               class="btn btn-sm btn-danger">Delete</a>
+                               class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                     <%
@@ -186,9 +210,9 @@ List<Expense> expenses = expenseDAO.getExpensesByUser(user.getId());
                     %>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <td colspan="3"><strong>Total:</strong></td>
-                        <td><strong>$<%= String.format("%.2f", total) %></strong></td>
+                    <tr style="background: var(--light); font-weight: 600;">
+                        <td colspan="3">Total Expenses:</td>
+                        <td class="negative">$<%= String.format("%.2f", total) %></td>
                         <td></td>
                     </tr>
                 </tfoot>
