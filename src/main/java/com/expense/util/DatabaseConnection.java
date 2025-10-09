@@ -13,15 +13,6 @@ public class DatabaseConnection {
         System.getenv("DB_PASSWORD") : "1234";
     
     public static Connection getConnection() throws SQLException {
-        try {
-            if (URL.startsWith("jdbc:postgresql")) {
-                Class.forName("org.postgresql.Driver");
-            } else {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            }
-            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("Database Driver not found", e);
-        }
+        return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
 }
