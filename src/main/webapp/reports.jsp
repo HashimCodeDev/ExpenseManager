@@ -164,6 +164,44 @@ double netBalance = totalIncome - totalExpenses;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        
+        table th:last-child {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            font-weight: 600;
+        }
+        
+        table td:last-child {
+            font-weight: 600;
+            font-size: 1.1em;
+            background: rgba(79, 70, 229, 0.05);
+        }
+        
+        .positive {
+            color: #10b981;
+        }
+        
+        .negative {
+            color: #ef4444;
+        }
+        
+        .income {
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .expense {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>

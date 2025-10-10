@@ -12,6 +12,14 @@ public class DatabaseConnection {
     private static final String PASSWORD = System.getenv("DB_PASSWORD") != null ? 
         System.getenv("DB_PASSWORD") : "1234";
     
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("MySQL JDBC Driver not found", e);
+        }
+    }
+    
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
