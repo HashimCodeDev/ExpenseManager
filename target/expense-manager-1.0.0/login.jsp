@@ -8,59 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/modern-style.css">
-    <style>
-        .auth-container {
-            max-width: 400px;
-            margin: 10vh auto;
-            padding: 40px;
-            backdrop-filter: blur(20px);
-            background: var(--backdrop);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-xl);
-            text-align: center;
-        }
-        .auth-container h1 {
-            background: linear-gradient(135deg, var(--primary), var(--info));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 8px;
-        }
-        .auth-container p {
-            color: var(--gray);
-            margin-bottom: 32px;
-        }
-        .auth-container a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .auth-container a:hover {
-            text-decoration: underline;
-        }
-        .demo-info {
-            margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(6, 182, 212, 0.05));
-            border: 1px solid rgba(99, 102, 241, 0.1);
-            border-radius: var(--border-radius-sm);
-            font-size: 0.9rem;
-            color: var(--gray-dark);
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="css/ultra-modern.css">
 </head>
 <body>
     <div class="background-pattern"></div>
-    <div class="auth-container">
-        <div style="margin-bottom: 32px;">
-            <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--primary), var(--info)); border-radius: 50%; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold;">💰</div>
-            <h1>Welcome Back</h1>
-            <p>Sign in to your account</p>
-        </div>
+    <div class="auth-container animate-fade-in">
+        <div class="hero-icon">💰</div>
+        <h1 class="mb-2" style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 700; font-size: 2rem;">Welcome Back</h1>
+        <p class="text-muted mb-8">Sign in to your account</p>
         
         <%
         String message = "";
@@ -84,25 +39,25 @@
         %>
         
         <% if (!message.isEmpty()) { %>
-            <div class="alert alert-danger"><%= message %></div>
+            <div class="alert alert-danger">❌ <%= message %></div>
         <% } %>
         
         <form method="post">
             <div class="form-group">
-                <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                <input type="text" name="username" class="form-control" placeholder="👤 Enter your username" required>
             </div>
             <div class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                <input type="password" name="password" class="form-control" placeholder="🔒 Enter your password" required>
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 16px; font-weight: 600;">Sign In</button>
+            <button type="submit" class="btn btn-primary w-full btn-lg">🚀 Sign In</button>
         </form>
         
-        <p style="margin-top: 24px;">Don't have an account? <a href="register.jsp">Create one here</a></p>
+        <p class="mt-6">Don't have an account? <a href="register.jsp" class="text-primary" style="text-decoration: none; font-weight: 500;">Create one here</a></p>
         
         <div class="demo-info">
-            <strong>Demo Account:</strong><br>
-            Username: demo<br>
-            Password: password123
+            <strong>🎯 Demo Account:</strong><br>
+            Username: <code>demo</code><br>
+            Password: <code>password123</code>
         </div>
     </div>
 </body>
