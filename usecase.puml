@@ -1,0 +1,39 @@
+@startuml ExpenseManager_UseCase
+!theme plain
+skinparam linetype ortho
+skinparam nodesep 50
+skinparam ranksep 80
+
+left to right direction
+
+actor User
+
+rectangle "ExpenseManager System" {
+    usecase "Register Account" as UC1
+    usecase "Login" as UC2
+    usecase "View Dashboard" as UC3
+    usecase "Add Expense" as UC4
+    usecase "Edit Expense" as UC5
+    usecase "Delete Expense" as UC6
+    usecase "Add Income" as UC7
+    usecase "Edit Income" as UC8
+    usecase "Delete Income" as UC9
+    usecase "View Reports" as UC10
+    usecase "Export Data" as UC11
+    usecase "Logout" as UC12
+}
+
+User --> UC1
+User --> UC2
+User --> UC3
+User --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+User --> UC9
+User --> UC10
+User --> UC11
+User --> UC12
+
+@enduml

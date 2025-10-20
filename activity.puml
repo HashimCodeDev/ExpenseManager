@@ -1,0 +1,64 @@
+@startuml ExpenseManager_Activity
+!theme plain
+skinparam linetype ortho
+
+start
+
+:User opens application;
+:Display login page;
+
+if (User has account?) then (yes)
+  :Enter credentials;
+  if (Valid credentials?) then (yes)
+    :Login successful;
+  else (no)
+    :Show error message;
+    stop
+  endif
+else (no)
+  :Click register;
+  :Fill registration form;
+  :Submit registration;
+  if (Registration successful?) then (yes)
+    :Account created;
+    :Redirect to login;
+  else (no)
+    :Show error message;
+    stop
+  endif
+endif
+
+:Display dashboard;
+:Show financial summary;
+
+repeat
+  :User selects action;
+  
+  switch (Action type?)
+  case (Add Expense)
+    :Fill expense form;
+    :Submit expense;
+    :Save to database;
+  case (Add Income)
+    :Fill income form;
+    :Submit income;
+    :Save to database;
+  case (View Reports)
+    :Generate reports;
+    :Display filtered data;
+  case (Export Data)
+    :Generate CSV;
+    :Download file;
+  case (Logout)
+    :End session;
+    stop
+  endswitch
+  
+  :Update dashboard;
+  
+repeat while (Continue using app?) is (yes)
+
+:Logout;
+stop
+
+@enduml

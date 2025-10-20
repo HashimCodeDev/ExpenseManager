@@ -1,0 +1,42 @@
+@startuml ExpenseManager_Module
+!theme plain
+skinparam linetype ortho
+
+package "Authentication Module" {
+    [login.jsp]
+    [register.jsp]
+    [UserDAO.java]
+    [User.java]
+}
+
+package "Expense Module" {
+    [expenses.jsp]
+    [ExpenseDAO.java]
+    [Expense.java]
+}
+
+package "Income Module" {
+    [income.jsp]
+    [IncomeDAO.java]
+    [Income.java]
+}
+
+package "Report Module" {
+    [reports.jsp]
+    [export.jsp]
+    [dashboard.jsp]
+}
+
+package "Database Module" {
+    [DatabaseConnection.java]
+    [MySQL Database]
+}
+
+[Authentication Module] --> [Database Module] : "uses"
+[Expense Module] --> [Database Module] : "uses"
+[Income Module] --> [Database Module] : "uses"
+[Report Module] --> [Expense Module] : "reads"
+[Report Module] --> [Income Module] : "reads"
+[Report Module] --> [Database Module] : "uses"
+
+@enduml

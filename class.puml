@@ -1,0 +1,92 @@
+@startuml ExpenseManager_Class
+!theme plain
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam nodesep 80
+skinparam ranksep 100
+
+top to bottom direction
+
+package "Model Layer" {
+    class User {
+        -id: int
+        -username: String
+        -email: String
+        -passwordHash: String
+        -createdAt: Date
+        --
+        +getId(): int
+        +getUsername(): String
+        +getEmail(): String
+    }
+    
+    class Expense {
+        -id: int
+        -userId: int
+        -description: String
+        -amount: BigDecimal
+        -category: String
+        -date: Date
+        --
+        +getId(): int
+        +getAmount(): BigDecimal
+        +getCategory(): String
+    }
+    
+    class Income {
+        -id: int
+        -userId: int
+        -description: String
+        -amount: BigDecimal
+        -category: String
+        -date: Date
+        --
+        +getId(): int
+        +getAmount(): BigDecimal
+        +getCategory(): String
+    }
+}
+
+package "Data Access Layer" {
+    class UserDAO {
+        +loginUser(username, password): User
+        +registerUser(user): boolean
+        +getUserById(id): User
+        +hashPassword(password): String
+    }
+    
+    class ExpenseDAO {
+        +addExpense(expense): boolean
+        +getExpensesByUser(userId): List<Expense>
+        +updateExpense(expense): boolean
+        +deleteExpense(id): boolean
+    }
+    
+    class IncomeDAO {
+        +addIncome(income): boolean
+        +getIncomesByUser(userId): List<Income>
+        +updateIncome(income): boolean
+        +deleteIncome(id): boolean
+    }
+}
+
+package "Utility Layer" {
+    class DatabaseConnection {
+        -URL: String
+        -USERNAME: String
+        -PASSWORD: String
+        --
+        +getConnection(): Connection
+    }
+}
+
+User ||--o{ Expense
+User ||--o{ Income
+UserDAO --> User
+ExpenseDAO --> Expense
+IncomeDAO --> Income
+UserDAO --> DatabaseConnection
+ExpenseDAO --> DatabaseConnection
+IncomeDAO --> DatabaseConnection
+
+@enduml
