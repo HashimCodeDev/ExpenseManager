@@ -1,0 +1,224 @@
+\chapter{IMPLEMENTATION}
+
+\section{System Modules}
+
+The Expense Manager system is implemented using a modular approach with clear separation of concerns. The system consists of the following major modules:
+
+\subsection{User Management Module}
+
+This module handles all user-related operations including registration, authentication, and session management.
+
+\subsubsection{Key Components:}
+\begin{itemize}
+    \item \textbf{User Model}: Represents user entity with attributes like id, username, email, and password hash
+    \item \textbf{UserDAO}: Data access object for user-related database operations
+    \item \textbf{Authentication Servlet}: Handles login and logout requests
+    \item \textbf{Registration Servlet}: Manages new user registration
+\end{itemize}
+
+\subsubsection{Implementation Details:}
+\begin{lstlisting}[caption=User Authentication Implementation]
+public class User {
+    private int id;
+    private String username;
+    private String email;
+    private String passwordHash;
+    private Date createdAt;
+    
+    // Constructors, getters, and setters
+}
+
+public class UserDAO {
+    public User loginUser(String username, String password) {
+        String hashedPassword = hashPassword(password);
+        // Database query to validate credentials
+        return user;
+    }
+    
+    public String hashPassword(String password) {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hash = md.digest(password.getBytes());
+        return Base64.getEncoder().encodeToString(hash);
+    }
+}
+\end{lstlisting}
+
+\subsection{Transaction Management Module}
+
+This module manages expense and income transactions with full CRUD operations.
+
+\subsubsection{Key Components:}
+\begin{itemize}
+    \item \textbf{Expense Model}: Represents expense transactions
+    \item \textbf{Income Model}: Represents income transactions
+    \item \textbf{ExpenseDAO}: Database operations for expenses
+    \item \textbf{IncomeDAO}: Database operations for income
+    \item \textbf{Transaction Servlets}: Handle HTTP requests for transaction operations
+\end{itemize}
+
+\subsubsection{Implementation Details:}
+\begin{lstlisting}[caption=Transaction Management Implementation]
+public class ExpenseDAO {
+    public boolean addExpense(Expense expense) {
+        String sql = "INSERT INTO expenses (user_id, description, amount, category, date) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, expense.getUserId());
+            stmt.setString(2, expense.getDescription());
+            stmt.setBigDecimal(3, expense.getAmount());
+            stmt.setString(4, expense.getCategory());
+            stmt.setDate(5, new java.sql.Date(expense.getDate().getTime()));
+            return stmt.executeUpdate() > 0;
+        }
+    }
+}
+\end{lstlisting}
+
+\subsection{Reporting Module}
+
+This module generates comprehensive reports with filtering and export capabilities.
+
+\subsubsection{Key Components:}
+\begin{itemize}
+    \item \textbf{ReportDAO}: Database queries for report generation
+    \item \textbf{Report Servlet}: Handles report requests and filtering
+    \item \textbf{Export Servlet}: Manages CSV export functionality
+    \item \textbf{Dashboard Servlet}: Provides real-time financial summaries
+\end{itemize}
+
+\section{Technologies Used}
+
+\subsection{Backend Technologies}
+
+\subsubsection{Java Server Pages (JSP)}
+JSP is used for creating dynamic web pages with embedded Java code. It provides:
+\begin{itemize}
+    \item Server-side rendering of dynamic content
+    \item Integration with Java objects and business logic
+    \item Template-based approach for consistent UI
+    \item Built-in session and request handling
+\end{itemize}
+
+\subsubsection{Java Servlets}
+Servlets handle HTTP requests and implement business logic:
+\begin{itemize}
+    \item Request processing and response generation
+    \item Session management and user authentication
+    \item Database interaction coordination
+    \item URL routing and controller functionality
+\end{itemize}
+
+\subsubsection{JDBC (Java Database Connectivity)}
+JDBC provides database connectivity and operations:
+\begin{itemize}
+    \item Connection pooling for performance optimization
+    \item Prepared statements for SQL injection prevention
+    \item Transaction management for data consistency
+    \item Result set processing for data retrieval
+\end{itemize}
+
+\subsection{Database Technology}
+
+\subsubsection{MySQL Database}
+MySQL serves as the primary data storage solution:
+\begin{itemize}
+    \item Relational database with ACID properties
+    \item Optimized queries with proper indexing
+    \item Foreign key constraints for data integrity
+    \item Backup and recovery mechanisms
+\end{itemize}
+
+\subsubsection{Database Schema}
+\begin{lstlisting}[language=SQL, caption=Database Schema Implementation]
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE expenses (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE income (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+\end{lstlisting}
+
+\subsection{Frontend Technologies}
+
+\subsubsection{HTML5}
+Provides semantic markup and modern web standards:
+\begin{itemize}
+    \item Semantic elements for better structure
+    \item Form validation attributes
+    \item Local storage capabilities
+    \item Accessibility features
+\end{itemize}
+
+\subsubsection{CSS3}
+Implements responsive design and modern styling:
+\begin{itemize}
+    \item Flexbox and Grid layouts for responsive design
+    \item CSS animations and transitions
+    \item Media queries for mobile compatibility
+    \item Custom properties for theme consistency
+\end{itemize}
+
+\subsubsection{JavaScript}
+Enhances user interaction and client-side functionality:
+\begin{itemize}
+    \item Form validation and user feedback
+    \item Dynamic content updates
+    \item AJAX requests for seamless user experience
+    \item Event handling and DOM manipulation
+\end{itemize}
+
+\section{Development Environment}
+
+\subsection{Build Tools}
+\begin{itemize}
+    \item \textbf{Apache Maven}: Dependency management and build automation
+    \item \textbf{Git}: Version control and collaboration
+    \item \textbf{IDE}: Eclipse/IntelliJ IDEA for development
+\end{itemize}
+
+\subsection{Server Configuration}
+\begin{itemize}
+    \item \textbf{Apache Tomcat 9.0}: Application server for JSP and Servlet deployment
+    \item \textbf{MySQL Server 8.0}: Database server with optimized configuration
+    \item \textbf{Connection Pooling}: HikariCP for efficient database connections
+\end{itemize}
+
+\section{Security Implementation}
+
+\subsection{Authentication Security}
+\begin{itemize}
+    \item SHA-256 password hashing with salt
+    \item Session-based authentication with timeout
+    \item CSRF protection for form submissions
+    \item Input validation and sanitization
+\end{itemize}
+
+\subsection{Database Security}
+\begin{itemize}
+    \item Prepared statements to prevent SQL injection
+    \item User data isolation through user ID filtering
+    \item Database connection encryption
+    \item Regular security updates and patches
+\end{itemize}

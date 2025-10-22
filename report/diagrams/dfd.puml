@@ -1,0 +1,60 @@
+@startuml DFD_Level1
+!theme plain
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam linetype ortho
+skinparam nodesep 80
+skinparam ranksep 100
+skinparam minlen 2
+
+skinparam actor {
+    BackgroundColor lightblue
+    BorderColor black
+    FontSize 12
+}
+
+skinparam rectangle {
+    BackgroundColor lightgreen
+    BorderColor black
+    FontSize 11
+}
+
+skinparam database {
+    BackgroundColor lightyellow
+    BorderColor black
+    FontSize 11
+}
+
+skinparam arrow {
+    Color black
+    FontSize 10
+}
+
+actor "User" as User
+
+rectangle "1.0\nUser\nAuthentication" as Auth
+rectangle "2.0\nTransaction\nManagement" as Trans
+rectangle "3.0\nReport\nGeneration" as Report
+rectangle "4.0\nDashboard\nServices" as Dash
+
+database "D1\nUser\nDatabase" as UserDB
+database "D2\nTransaction\nDatabase" as TransDB
+
+User -right-> Auth : Login Credentials
+Auth -left-> User : Authentication Status
+Auth <-down-> UserDB : User Data
+
+User -down-> Trans : Transaction Details
+Trans -up-> User : Confirmation Message
+Trans <-right-> TransDB : Transaction Records
+
+User -down-> Report : Report Parameters
+Report -up-> User : Generated Reports
+Report <-left-> TransDB : Transaction Data
+
+User -down-> Dash : Dashboard Request
+Dash -up-> User : Financial Summary
+Dash <-down-> TransDB : Aggregated Data
+Dash <-left-> UserDB : User Information
+
+@enduml

@@ -1,0 +1,1744 @@
+ACTIVITAR
+CSD 416 Project Phase II
+
+MDL20CS053 20CSB30
+Govind S
+MDL20CS123 20CSB63
+Vishnu R
+LMDL20CS131 20CSB66
+Adish Benoy
+LMDL20CS133 20CSB67
+Alex Shabu
+B. Tech Computer Science & Engineering
+
+Department of Computer Engineering
+Model Engineering College, Ernakulam
+Thrikkakara, Kochi 682021
+Phone: +91.484.2575370
+http://www.mec.ac.in
+hodcs@mec.ac.in
+
+May 2024
+
+Model Engineering College, Thrikkakara
+Department of Computer Engineering
+
+CERTIFICATE
+This is to certify that, this report titled Activitar is a bonafide record of the work done by
+
+MDL20CS053 20CSB30 Govind S
+MDL20CS123 20CSB63 Vishnu R
+LMDL20CS131 20CSB66 Adish Benoy
+LMDL20CS133 20CSB67 Alex Shabu
+Eighth Semester B. Tech. Computer Science & Engineering
+students, for the course work in CSD416 Project Phase II, which is the second part of the two
+semester project work, under our guidance and supervision, in partial fulfillment of the requirements
+for the award of the degree, B. Tech. Computer Science & Engineering of APJ Abdul Kalam
+Technological University.
+Guide
+
+Dr. Binu V.P
+Associate Professor
+Computer Engineering
+
+Coordinator
+
+Head of Department
+
+Dr. Sindhu L
+Assistant Professor
+Computer Engineering
+
+Dr. Binu V.P
+Associate Professor
+Computer Engineering
+
+7th May 2024
+
+Acknowledgements
+This project would not have been possible without the kind support and help of many individuals. We would like to extend our sincere thanks to all of them.
+First of all, we would like to thank our esteemed Principal, Dr. Mini M G, for her guidance
+and support in maintaining a calm and refreshing environment to work in and also for providing
+the facilities that this work demanded.
+We are highly indebted to our Project Coordinator, Dr Sindhu L, Assistant Professor and Head
+of the Department, Dr.Binu VP for their guidance, support, and constant supervision throughout
+the duration of the work as well as for providing all the necessary information and facilities that
+this work demanded.
+We would like to thank our Project Guide, Dr Binu VP for his support and valuable insights
+and also for helping us out in correcting any mistakes that were made during the course of the
+work.
+We offer our sincere gratitude to all our friends and peers for their support and encouragement
+that helped us get through the tough phases during the course of this work.
+Last but not least, we thank the Almighty God for guiding us through and enabling us to
+complete the work within the specified time.
+
+20CSB30
+20CSB63
+20CSB66
+20CSB67
+
+GOVIND S
+VISHNU R
+ADISH BENOY
+ALEX SHABU
+
+Abstract
+Activitar is an application that seamlessly integrates gyms into a comprehensive digital platform, redefining the fitness landscape. Designed to empower users on their journey to optimal
+health and fitness,activitar analyzes body metrics and daily lifestyles to curate personalized workout routines for users of all levels, while also offering personalized 7-day meal plans ensuring a
+holistic approach to fitness that encompasses both physical activity and nutrition. Furthermore,
+Activitar facilitates a seamless connection between users and gym employees, allowing instructors
+to monitor workout schedules and provide guidance, while also serving as a channel for users to
+provide feedback and voice their concerns. By promoting open communication and active participation, Activitar creates a supportive environment for personal growth in fitness.
+
+Contents
+List of Figures
+
+iv
+
+List of Tables
+
+v
+
+1 Introduction
+1.1 Proposed Project . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.1.1 Problem Statement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.1.2 Proposed Solution . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1
+1
+1
+1
+
+2 System Study Report
+2.1 Literature Survey . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.2 Summary of literature survey . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.3 Proposed System . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2
+2
+7
+9
+
+3 Software Requirement Specification
+3.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.1.1 Purpose . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.1.2 Intended Audience . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.1.3 Project Scope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2 Overall Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2.1 Product Perspective . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2.2 Product Functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2.3 User Classes and Characteristics . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2.4 Operating Environment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2.5 Design and Implementation Constraints . . . . . . . . . . . . . . . . . . . . .
+3.3 Hardware and Software Requirements . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3.1 Hardware Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3.2 Software Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.4 Functional Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.4.1 Login/Signup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.4.2 User Lifestyle . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.4.3 Meal Plans . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.4.4 Workout Plans . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.4.5 Mark user attendance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.5 Non-functional Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.5.1 Performance Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+10
+10
+10
+10
+11
+11
+11
+11
+11
+11
+12
+12
+12
+12
+12
+12
+12
+12
+12
+13
+13
+
+i
+
+Activitar
+
+Contents
+
+3.5.2 Scalability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.5.3 Security Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.5.4 Reliability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Other Requirements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+13
+13
+13
+13
+
+4 System Design
+4.1 System Architecture . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.1.1 User Module . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.1.2 Admin Module . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.1.3 Gym employee Module . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.2 Use Case Diagram . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.3 Activity Diagram . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+14
+15
+15
+15
+16
+19
+
+3.6
+
+5 Data Flow Diagram
+22
+5.1 Level 0 DFD . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+5.2 Level 1 DFD . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+6 Implementation
+6.1 Algorithm for diet and workout prediction . . . . . . . . . . . . . . . . . . . . . . . .
+6.2 Dataset . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.3 Development Tools . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+24
+24
+24
+24
+
+7 Testing
+7.1 Testing Methodologies . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.2 Unit Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.2.1 Register Gym employee . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.2.2 Add Personal Workouts . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.2.3 Predict Body Type, Diet, and Workout . . . . . . . . . . . . . . . . . . . . .
+7.3 Integration Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.3.1 Login and Registration Integration . . . . . . . . . . . . . . . . . . . . . . .
+7.3.2 Workout Management Integration . . . . . . . . . . . . . . . . . . . . . . . .
+7.3.3 Body Type Prediction Integration . . . . . . . . . . . . . . . . . . . . . . . .
+7.4 System Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.4.1 End-to-End Scenario Testing . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+26
+26
+27
+27
+27
+27
+27
+27
+28
+28
+28
+28
+
+8 Graphical User Interface
+8.1 GUI Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.2 Main GUI Components . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.2.1 Admin Module . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.2.2 User Module . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.2.3 Gym employee Module . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.2.4 Screenshots . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+29
+29
+29
+29
+29
+30
+31
+
+9 Results
+
+42
+
+10 Conclusion
+
+43
+
+Dept. of Computer Engineering, MEC, 2024
+
+ii
+
+Activitar
+
+Contents
+
+11 Future Scope
+11.1 Real-time data monitoring . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11.2 Integration of wearable devices . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11.3 Social Features . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11.4 Expanded services . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+44
+44
+44
+44
+44
+
+References
+
+45
+
+Dept. of Computer Engineering, MEC, 2024
+
+iii
+
+List of Figures
+Figure 4.1:
+Figure 4.2:
+Figure 4.3:
+Figure 4.4:
+Figure 4.5:
+Figure 4.6:
+Figure 4.7:
+
+Architecture Diagram . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Use Case Diagram (User) . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Use Case Diagram (Gym employee) . . . . . . . . . . . . . . . . . . . . . . .
+Use Case Diagram (Admin) . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Activity Diagram - USER . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Activity Diagram - ADMIN . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Activity Diagram - GYM EMPLOYEE . . . . . . . . . . . . . . . . . . . . .
+
+Figure 5.1:
+Figure 5.2:
+
+DFD Level 0 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+DFD Level 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+Figure 8.1: Home page . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.2: Login Page . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.3: User - batch details view . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.4: User registration . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.5: User prediction(Input) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.6: Predicted diet . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.7: User predicted workout . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.8: User view attendance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.9: Display current BMI . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.10: User feedback . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.11: Gym Employee view user details . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.12: Gym Employee - view predicted workout . . . . . . . . . . . . . . . . . . . .
+Figure 8.13: Gym Employee - Add user specific workouts . . . . . . . . . . . . . . . . . .
+Figure 8.14: Gym Employee - Manage equipmnts at the gym . . . . . . . . . . . . . . . .
+Figure 8.15: Admin Homepage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.16: Gym employee registration by admin . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.17: Admin add batches . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.18: View feedback . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figure 8.19: Admin - view paymenst . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+iv
+
+14
+16
+17
+18
+19
+20
+21
+
+31
+32
+32
+33
+34
+34
+35
+36
+36
+37
+37
+38
+38
+39
+39
+40
+40
+41
+41
+
+List of Tables
+Table 2.1:
+
+Summary of publications . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+v
+
+7
+
+Chapter 1
+
+Introduction
+1.1
+
+Proposed Project
+
+1.1.1
+
+Problem Statement
+
+The abundance of nutrition data available online can be overwhelming for individuals seeking
+guidance on diet and fitness. All the currently available systems are focusing on fitness enthusiasts
+and frequent gym goers.The predictions made by these applications may not be accurate and there
+is no provision to rectify the same . All these diet and fitness applications requires a high degree
+of involvement from the user , which is not possible for many common people.
+
+1.1.2
+
+Proposed Solution
+
+Developing an intuitive and user-friendly interface that allows individuals to input their health
+metrics, and progress easily.Addressing the challenges associated with uncertain and dynamic data
+related to users’ health metrics, food habits, and physical activities. The machine learning algorithm
+will enable the system to learn and adapt to varying individual lifestyles, optimizing the accuracy
+and relevance of diet and fitness recommendations.
+
+1
+
+Chapter 2
+
+System Study Report
+2.1
+
+Literature Survey
+
+1.Real-Time Learning from an Expert in Deep Recommendation Systems with
+Application to mHealth for Physical Exercises (2022) - Arash Mahyari , Peter
+Pirolli
+This paper explores exercise recommendation systems, crucial due to sedentary lifestyles’ health
+impact. It proposes a deep recurrent neural network with user-profile and temporal attention mechanisms. To address the lack of direct user feedback, it introduces a real-time active learning process
+involving experts when certainty is low. Experimental results on mHealth and MovieLens datasets
+show enhanced accuracy with this approach, underscoring the importance of expert involvement in
+refining recommendations.
+Advantage : Automating the task of composing nutritionally balanced meals involves multiobjective decision-making and customization.
+Disadvantage :The task of composing nutritionally balanced meals should consider restrictions in
+food variety, human considerations, and avoid overemphasis on certain nutrients.
+
+2.e-Health Monitoring System with Diet and Fitness Recommendation using
+Machine Learning(2021) - Divya Mogaveera, Vedant Mathur
+This paper presents a system to improve the health of individuals with chronic conditions like Diabetes, Blood pressure, or Thyroid issues. It offers personalized diet and exercise recommendations
+by analyzing health parameters and disease-related reports. With Health Monitoring and Diet Exercise Recommendation modules, it suggests follow-up sessions and utilizes the C4.5 Decision Tree
+algorithm for tailored plans. This approach supports patients and enables healthcare professionals
+to provide personalized guidance, emphasizing the role of data-driven methods in enhancing health
+outcomes.
+Advantage : Personalized recommendations for chronic disease management enhance patient outcomes. Continuous health monitoring ensures timely interventions and adjustments to treatment
+plans. Utilization of machine learning facilitates tailored guidance for patients and improves healthcare professionals’ ability to deliver personalized care.
+2
+
+Activitar
+
+2. System Study Report
+
+Disadvantage :
+Dependency on machine learning algorithms may introduce complexity and potential for errors.
+Customized datasets for decision-making may require significant effort to gather and maintain.
+The system’s effectiveness may be limited by the quality and accuracy of health parameters and
+disease-related reports.
+
+3.Fog-Centric IoT Based Framework for Healthcare Monitoring, Management
+and Early Warning System(2021) - Afzaal Hussain , Kashif Zafar
+This paper presents a fog-centric framework for real-time health and fitness analysis in smart gyms,
+utilizing smart wearable technology and IoT. Integrating machine learning, it monitors body vitals
+and movement to support athletes, trainers, and physicians by interpreting physical signs and issuing alerts for health hazards. The research involves a six-week workout plan recording various
+data, used in two modules: Health zone and Hzone for categorizing health states and identifying
+hazards with 97 accuracy. Additionally, Gym Activity Recognition achieves over 89 accuracy for
+real-time recognition of workout activities. This contributes to IoT and machine learning in healthcare, showcasing promising results in smart gym environments.
+Advantage : Real-time monitoring with smart wearables enhances health and fitness analysis. Integration of machine learning enables interpretation of multiple physical signs and timely alerts for
+health hazards. Detailed exercise-specific data collection facilitates personalized recommendations
+and benefits assessment for athletes.
+Disadvantage : Dependence on technology may introduce reliability issues or data inaccuracies.
+Initial setup and calibration of the framework could be time-consuming and resource-intensive.
+Privacy concerns may arise from the collection and analysis of sensitive health-related data within
+smart gym environments.
+
+4.Implementation of IoT Device on Public Fitness Equipment for Health Physical
+Fitness Improvement (2020) - Ching-Ting Hsu , Yang-Hung Chang
+his paper presents an IoT architecture for public fitness equipment, integrating hardware like reed
+switches and microcontrollers with web services and databases. Experimental results show improved fitness among participants, emphasizing the effectiveness of IoT-enabled fitness equipment
+in promoting efficient exercise practices. The study underscores IoT’s potential in enhancing public
+health through innovative fitness applications.
+Advantage : Integration of IoT enhances accessibility to fitness equipment in public spaces, encouraging physical activity. The architecture allows for personalized exercise prescriptions, catering
+to individual fitness needs. IoT-enabled equipment provides real-time feedback and monitoring, motivating users to maintain consistent exercise routines for improved health outcomes.
+Disadvantage : Dependency on technology may lead to equipment malfunctions or downtime,
+disrupting access to fitness facilities. Initial setup and maintenance costs for IoT infrastructure
+could be prohibitive for some communities or municipalities. Privacy concerns may arise from the
+collection and storage of user data through IoT-enabled fitness equipment.
+
+Dept. of Computer Engineering, MEC, 2024
+
+3
+
+Activitar
+
+2. System Study Report
+
+5.Fuzzy based approach for diet prediction(2019) - Arushi Singh , Nandini Kashyap
+This study addresses the contemporary challenge of individuals neglecting their dietary habits and
+its impact on health. With a focus on countering the rise of nutrition-related diseases due to unhealthy lifestyles, the research introduces a method to generate personalized diet plans for different
+age groups. Utilizing data from diverse sources, the system calculates the required amounts of
+essential nutrients such as carbohydrates, vitamins, minerals, milk protein, meat protein, fat, and
+sugar. The proposed approach employs fuzzy logic, a many-valued logic system, to offer accurately balanced diet recommendations for each age group. Through the integration of fuzzy logic
+techniques and a comprehensive diet recommendation system, the research aims to contribute to
+healthier lifestyles and combat the adverse effects of poor nutrition in today’s busy world.
+Advantage : This study proposes personalized diet plans for different age groups to combat poor
+dietary habits and health issues. By utilizing data and fuzzy logic, it calculates essential nutrient
+amounts and offers balanced diet recommendations, aiming to foster healthier lifestyles and combat
+nutrition-related diseases.
+Disadvantage : The reliance on fuzzy logic introduces a level of complexity that may necessitate
+specialized knowledge for both implementation and maintenance of the system. Additionally, the
+subjective nature of interpreting fuzzy logic outputs could potentially lead to discrepancies in diet
+recommendations. Furthermore, the effectiveness of personalized diet plans may be influenced by
+limitations in data accuracy or availability from the diverse sources used, thereby impacting the
+overall efficacy of combating poor nutrition and promoting healthier lifestyles.
+
+6.Automatic Diet Recording based on Deep Learning (2018) - Ligang Hu,Wei
+Zhang
+This paper addresses the challenge of time-consuming and costly diet assessments by proposing an
+automatic diet recording system leveraging deep learning algorithms. The study involves training
+and evaluating several deep learning models on popular food image datasets, achieving impressive top-1 accuracy rates on UEC FOOD 100, UEC FOOD 256, Food-101, and ChineseFoodNet
+datasets. By integrating multiple convolutional neural network models, the system reaches accuracy levels of 84.0 percent, 75.9 percent, 84.5 percent, and 79.8 percent, respectively. The second
+contribution involves building an automatic diet recording prototype system based on the trained
+deep learning models, exhibiting strong performance in real canteen tests. The research underscores the efficacy of deep learning in accurately identifying dietary objects, thereby enhancing the
+automation of diet recording processes. The proposed system has potential applications in disease
+prevention and rehabilitation research by facilitating efficient and accurate diet assessments.
+Advantage : The paper introduces an automatic diet recording system using deep learning algorithms, alleviating time and cost burdens of traditional assessments. Achieving impressive accuracy
+rates, it offers practicality in real-world tests, enhancing efficiency in diet assessments.
+Disadvantage : Complexities in implementation and maintenance, data quality issues, resource
+requirements, and privacy concerns are potential drawbacks.
+
+Dept. of Computer Engineering, MEC, 2024
+
+4
+
+Activitar
+
+2. System Study Report
+
+7.Optimized Daily Diet Composition for a Nutritionally Balanced Diet: An
+Application of Fuzzy Multiple Objective Linear Programming (2016) - Mary
+Tom,Susan Williams
+This interdisciplinary study addresses the growing prevalence of nutrition-related diseases by proposing a fuzzy optimization model for formulating nutritionally balanced meals. The complexity of
+evaluating menu items and analyzing a range of nutrient values is a significant challenge in achieving a balanced diet. The study utilizes Fuzzy Multi-objective Linear Programming (FMOLP) to
+automate the task of composing daily diets that limit nutrients such as cholesterol, sugar, saturated fat, and sodium. An effective algorithm is developed to generate a Pareto optimal solution
+set, showcasing various optimized daily diet choices. The model is tested with a dataset of one
+hundred menu items to demonstrate its applicability and effectiveness in creating nutritionally balanced diets. This research contributes to the advancement of automated tools for dietary planning,
+providing a valuable resource for individuals seeking balanced nutrition to prevent and manage
+nutrition-related diseases.
+Advantage : This study introduces a fuzzy optimization model for balanced meals, automating
+dietary planning while limiting nutrients. Tested with one hundred menu items, it offers various
+optimized daily diet choices, aiding in disease prevention and management.
+Disadvantage :Implementing the fuzzy optimization model may require expertise. Data quality
+issues and cultural dietary preferences could impact accuracy. Automated tools may overlook individual needs, necessitating human oversight.
+
+8.An Interactive Healthcare System with Personalized Diet and Exercise Guideline Recommendation (2015) - Jerry C.C. Tseng, Bo-Hau Lin
+This paper introduces an interactive system of a virtual healthcare assistant designed to facilitate
+effective health management, particularly for individuals with chronic diseases such as metabolic
+syndrome. The system analyzes regular physical examination results to assess health risks and offers personalized healthcare services, including diet and exercise guideline recommendations. Users
+can easily provide vital signs feedback through interactive features, enabling quick access to health
+management suggestions. The system extends its functionality to a mobile app, ensuring regular
+reminders for users to follow the recommendations. To validate the system’s feasibility in realworld clinical environments, the authors applied for Institutional Review Board (IRB) approval for
+human subject research. The system’s non-functional features include using cost-effective physical
+examination results as raw data and ensuring extendability for various chronic illnesses. The extensibility feature allows adaptation for different diseases and the provision of diverse healthcare
+guideline recommendations, making significant contributions to personalized health management.
+Advantage : The virtual healthcare assistant streamlines health management for chronic diseases,
+providing personalized recommendations based on physical exam results. Interactive features enable easy user feedback, and a mobile app offers regular reminders for adherence. Extensibility
+allows adaptation for diverse illnesses, enhancing personalized care.
+Disadvantage : Implementation may require substantial initial investment and expertise. Reliance
+on physical examination results may limit accuracy. Personalization could overlook individual nuances, and user adherence may vary. Additionally, ensuring data security and privacy in a mobile
+
+Dept. of Computer Engineering, MEC, 2024
+
+5
+
+Activitar
+
+2. System Study Report
+
+app setting is crucial but challenging.
+
+9.An Eldercare Electronic Health Record System for Predictive Health Assessment (2014) - Mihail Popescu, George Chronis
+Implementing the IEEHR system may require significant initial investment and technical expertise.
+Integration challenges among diverse components could arise, impacting system efficiency. Privacy
+concerns regarding health data collection and sharing in assisted living communities need careful consideration. Additionally, user acceptance and adherence to monitoring protocols may vary
+among older adults.
+Advantage :The Integrated Eldercare Electronic Health Record (IEEHR) system offers comprehensive health monitoring for independent older adults, combining health data, sensor networks,
+and telehealth measurements. It aims to streamline chronic disease management, reduce nursing
+workload, and enable predictive health assessment algorithms, benefiting eldercare.
+Disadvantage :Implementing the IEEHR system may require significant initial investment and
+technical expertise. Integration challenges among diverse components could arise, impacting system efficiency. Privacy concerns regarding health data collection and sharing in assisted living
+communities need careful consideration. Additionally, user acceptance and adherence to monitoring protocols may vary among older adults.
+
+10.Design of Diet Recommendation System for Healthcare Service Based on User
+Information(2014) - Jong-Hun Kim, Jung-Hyun Lee,Jee-Song Park, Young-Ho
+Lee
+This study addresses issues in conventional health care services, such as the lack of personalized
+service and uniformity, particularly in the context of diet recommendations for preventing and
+managing coronary heart disease. The research proposes a customized diet recommendation service that goes beyond merely focusing on personal disease information. By considering various
+factors, including basic information, vital signs, family history of diseases, and food preferences
+according to seasons and intakes, the service tailors diet plans for individuals concerned about
+coronary heart disease. This approach aims to offer users a unique and personalized diet service,
+supporting continuous engagement and facilitating positive changes in their living habits. The
+study contributes to the advancement of health care services by providing a more individualized
+and effective approach to diet recommendations, especially in the context of preventing and managing specific health conditions like coronary heart disease.
+Advantage :The study introduces a customized diet recommendation service addressing the lack
+of personalized care in conventional healthcare. By considering various factors, it offers tailored diet
+plans, promoting continuous engagement and positive lifestyle changes for individuals concerned
+about coronary heart disease.
+Disadvantage :Implementing a customized diet recommendation service may require significant
+resources and expertise. Challenges in data collection and interpretation, as well as user adherence
+to personalized plans, could impact effectiveness. Additionally, ensuring privacy and data security
+in handling personal health information is crucial.
+Dept. of Computer Engineering, MEC, 2024
+
+6
+
+Activitar
+
+2.2
+
+2. System Study Report
+
+Summary of literature survey
+Table 2.1: Summary of publications
+
+SI No
+1
+
+Year
+2022
+
+2
+
+2021
+
+3
+
+2021
+
+4
+
+2020
+
+5
+
+2019
+
+6
+
+2018
+
+7
+
+2016
+
+Name of paper
+Real-Time Learning
+from an Expert
+in Deep Recommendation Systems
+with Application to
+mHealth for Physical
+Exercises
+e-Health Monitoring
+System with Diet
+and Fitness Recommendation using
+Machine Learning
+Fog-Centric
+IoT
+Based
+Framework
+for Healthcare Monitoring, Management
+and Early Warning
+Systm
+Implementation of
+IoT Device on Public
+Fitness Equipment
+for Health Physical
+Fitness Improvement
+Fuzzy based approach
+for
+diet
+prediction
+Automatic
+Diet
+Recording based on
+Deep Learning
+
+Authors
+Arash Mahyari ,
+Peter Pirolli
+
+Advantage
+Multi
+objective
+decision
+making,customizations
+
+Disadvantage
+Expert dependencies, restriction in
+food varities
+
+Divya Mogaveera,
+Vedant Mathur
+
+Use of C4.5 decision tree algorithm
+over ID3,cost effective
+
+Limited scope,no
+real-time
+health
+monitoring.
+
+Afzaal Hussain ,
+Kashif Zafar
+
+Early
+Warning
+System,Data
+driven recommendations
+
+Cost, maintanence
+and calibration
+
+Ching-Ting Hsu
+,
+Yang-Hung
+Chang
+
+Public Health promotion,research
+and development
+
+Heterogeneity
+users,Intensity
+Adjustment
+
+Arushi Singh ,
+Nandini Kashyap
+
+Complexity in implementation,User
+acceptance
+Data bias and variability
+
+Optimized
+Daily
+Diet
+Composition
+for a Nutritionally
+Balanced Diet: An
+Application of Fuzzy
+Multiple Objective
+Linear Programming
+
+Mary Tom,Susan
+Williams
+
+Personlised
+diet
+plans,Holistic
+approach
+Efficiency in diet
+recording,potential
+for disease prevention
+Efficiency
+in
+diet
+formulation,creation
+of
+nutritionally balanced diets
+
+Ligang
+Zhang
+
+Hu,Wei
+
+of
+
+User
+acceptance
+and
+practical
+implementation
+
+Continued on next page
+
+Dept. of Computer Engineering, MEC, 2024
+
+7
+
+Activitar
+
+2. System Study Report
+
+SI No.
+8
+
+Year
+2015
+
+9
+
+2014
+
+10
+
+2013
+
+Table 2.1 – Continued from previous page
+Name of paper
+Authors
+Advantage
+An
+Interactive Jerry C.C. Tseng, Personalised
+Healthcare System Bo-Hau Lin
+healthwith
+Personalized
+care,accessibility
+Diet and Exercise
+Guideline
+Recommendation
+An Eldercare Elec- Mihail Popescu, Enhanced chronic
+tronic Health Record George Chronis
+disease
+manageSystem for Predicment,Reduced
+tive Health Assessnursing workload
+ment
+Design
+of
+Diet Jong-Hun Kim, Comprehensive apRecommendation
+Jung-Hyun
+proach
+System for Health- Lee,Jee-Song
+care Service Based Park, Young-Ho
+on User Information Lee
+
+Dept. of Computer Engineering, MEC, 2024
+
+8
+
+Disadvantage
+Data accuracy,user
+adherence
+
+Technical complexity,User adoption.
+
+Data
+complexity,Subjectivity in
+preferences
+
+Activitar
+
+2.3
+
+2. System Study Report
+
+Proposed System
+
+Introducing Activitar, an application poised to redefine the fitness landscape by integrating gyms
+into a comprehensive digital platform. At its core, Activitar is designed to empower users on their
+journey towards optimal health and fitness. Activitar analyzes users’ body metrics and lifestyles to
+curate personalized workout routines. Whether you’re a novice or a seasoned gym-goer, Activitar’s
+tailored approach ensures that every workout is optimized for your individual needs, fostering
+progress and sustainability.
+
+Dept. of Computer Engineering, MEC, 2024
+
+9
+
+Chapter 3
+
+Software Requirement Specification
+3.1
+
+Introduction
+
+3.1.1
+
+Purpose
+
+The Software Requirements Specification (SRS) document Activitar serves as a comprehensive
+guide outlining the functional and non-functional requirements, constraints, and specifications of
+the software. Its primary purpose is to provide a clear and detailed understanding of the system’s
+functionalities, ensuring that stakeholders, including developers, designers, testers, and users, have
+a unified vision of the software’s scope and objectives.
+
+3.1.2
+
+Intended Audience
+
+This document is crafted for health and fitness professionals, gym owners, and all stakeholders
+engaged in the development and utilization of Activitar. It is also applicable to other entities in
+the fitness and health industry, such as fitness apps and similar organizations seeking innovative
+solutions.
+
+3.1.3
+
+Project Scope
+
+Activitar is engineered to offer dynamic nutritional guidance for individuals pursuing health and
+fitness goals. It integrates machine learning and analytics to optimize personalized dietary plans
+and enhance decision-making in the realm of nutrition and fitness management.
+
+10
+
+Activitar
+
+3.2
+
+Overall Description
+
+3.2.1
+
+Product Perspective
+
+3. Software Requirement Specification
+
+Activitar is a software project that involves creating an intuitive platform that leverages machine
+learning algorithms to provide personalized diet plans and exercise routines, aiming to optimize
+users health and fitness journey efficiently. Designed for scalability, the system accommodates a
+growing user base and adapts to emerging technologies.
+
+3.2.2
+
+Product Functions
+
+• Record user activity, food intake, nature of work ,gender and progress to adjust recommendations and ensure accountability.
+• Suggest personalized diet plans and exercise routines based on user metrics and health parameters.
+• Analyze data to refine suggestions, adapt to user habits, and optimize goal achievement.
+
+3.2.3
+
+User Classes and Characteristics
+
+• Users: This includes fitness enthusiasts, athletes , people novice to fitness field and other
+stakeholders. The user has to sign up which will be verified with the database. Once verified,
+the user can log in to their account and explore the services offered with Activitar.
+
+3.2.4
+
+Operating Environment
+
+The operating environment for this web app using Django, React, and a KNN model comprises
+a backend built with Django running on a web server, interacting with MySQL. The frontend,
+developed with React, operates in web browsers and communicates with the Django backend,
+while the KNN model, implemented with libraries like scikit-learn, operates within the Python
+environment alongside Django.
+
+3.2.5
+
+Design and Implementation Constraints
+
+Activitar must adhere to data privacy and security regulations. It should also support various
+category of people (underweight,overweight, etc).
+
+Dept. of Computer Engineering, MEC, 2024
+
+11
+
+Activitar
+
+3. Software Requirement Specification
+
+3.3
+
+Hardware and Software Requirements
+
+3.3.1
+
+Hardware Requirements
+
+Storage : A computer with a ram of 2GB and above.
+Operating system : Windows 7 or above , Linux Ubuntu 16.04 and above
+
+3.3.2
+
+Software Requirements
+
+Backend: Django framework compatible with Python 3.6 and above.
+Frontend: React library
+Database: MySQL for data storage, accessible by Django.
+Libraries : Scikit-learn, Pandas, Numpy, Matplotlib
+Code editor : VSCode
+
+3.4
+
+Functional Requirements
+
+3.4.1
+
+Login/Signup
+
+The system first asks the user to Signup/login using their username and password combination.
+
+3.4.2
+
+User Lifestyle
+
+It allows users to set and update their lifestyle ,food and exercise habits
+
+3.4.3
+
+Meal Plans
+
+It offer meal suggestions, recipes, and nutritional information for a week aligned with the user’s
+dietary needs and requirements.
+
+3.4.4
+
+Workout Plans
+
+Based on the user’s profile , the system generates tailored workout plans comprising exercises, sets,
+reps and rest periods for a during of 7 days, enabling the user to stay in good shape.
+
+3.4.5
+
+Mark user attendance
+
+The gym employee ensures that users are regular in following the plan suggested by the application.
+
+Dept. of Computer Engineering, MEC, 2024
+
+12
+
+Activitar
+
+3. Software Requirement Specification
+
+3.5
+
+Non-functional Requirements
+
+3.5.1
+
+Performance Requirements
+
+System should provide fast and responsive predictions .
+
+3.5.2
+
+Scalability
+
+System must be capable of handling large volume of data .
+
+3.5.3
+
+Security Requirements
+
+Ensure data security and privacy by not sharing sensitive personal user data with other users.
+
+3.5.4
+
+Reliability
+
+System must be reliable with minimal down-time.
+
+3.6
+
+Other Requirements
+
+The legality of using private user data must be ensured. Additionally, care must be taken to
+guarantee that only authorized users with proper credentials can modify personal health and fitness
+data. Transparency is also crucial to ensure unbiased recommendations and guidance throughout
+the dietary and fitness management process.
+
+Dept. of Computer Engineering, MEC, 2024
+
+13
+
+Chapter 4
+
+System Design
+4.1
+
+System Architecture
+
+Activitar consists of three modules which are User Module , Admin Module , Gym employee Module
+The details and functions of each module is as given below:
+
+Figure 4.1: Architecture Diagram
+
+14
+
+Activitar
+
+4.1.1
+
+4. System Design
+
+User Module
+
+• The User Module serves as the user’s gateway to the Activitar application, providing an
+intuitive and interactive platform.
+• Registration and Login: Register as a new user by providing personal details such as height,
+weight, gender, age, etc. and also login to the system using a username and password.
+• Payment Processing: Make payments for membership or services offered by the gym and view
+payment status and history.
+• Accessing Personal Information: View personal details entered during registration and access
+information about assigned batches, workout plans, and attendance records.
+• Body Metrics Predictions: Enter personal metrics such as height and weight to receive
+predictions on body type, recommended diet, and workout plans.
+• Workout Plans: View assigned workout plans recommended by the system or provided by
+gym employees.
+• Feedback:Provide feedback on the workout plans and overall user experience and communicate with gym employees regarding workout-related queries or concerns.
+
+4.1.2
+
+Admin Module
+
+• Employee Management: Register new gym employees by providing details such as name,
+gender, age, username, password, etc and also update and delete existing employee details.
+• Batch Management: Create new batches for fitness classes or time slots, assign specific gym
+employees to each batch.and manage batch schedules.
+• Payment Verification: View pending payments made by users and verify payments those once
+they are completed.
+• Feedback Handling: Receive ,view and respond to feedbacks submitted by users and take
+necessary actions.
+
+4.1.3
+
+Gym employee Module
+
+• User Management: Access user details including height, weight, gender, age, etc.
+• Batch Management:View users assigned to their respective batches and manage user profiles.
+• Workout Management: Add, edit, or delete workout plans for users and manage equipment
+availability and usage.
+• Attendance Tracking: Mark attendance for users attending fitness classes and Keep track of
+users’ attendance records and participation.
+
+Dept. of Computer Engineering, MEC, 2024
+
+15
+
+Activitar
+
+4.2
+
+4. System Design
+
+Use Case Diagram
+
+The use case diagram outlines the various interactions between users and the Activitar system, illustrating specific actions like inputting dietary preferences, tracking fitness progress, and receiving
+personalized health recommendations. It provides a high-level overview of the system’s functionalities, emphasizing the key user roles and the specific use cases they engage in within the Activitar
+platform.
+
+Figure 4.2: Use Case Diagram (User)
+
+Dept. of Computer Engineering, MEC, 2024
+
+16
+
+Activitar
+
+4. System Design
+
+Figure 4.3: Use Case Diagram (Gym employee)
+
+Dept. of Computer Engineering, MEC, 2024
+
+17
+
+Activitar
+
+4. System Design
+
+Figure 4.4: Use Case Diagram (Admin)
+
+Dept. of Computer Engineering, MEC, 2024
+
+18
+
+Activitar
+
+4.3
+
+4. System Design
+
+Activity Diagram
+
+The activity diagram visually represents the flow of actions within Activitar, illustrating the sequential steps from user input to the generation of personalized dietary and fitness plans. It provides
+a clear, step-by-step visualization of how users engage with the system, emphasizing the dynamic
+nature of health and wellness management.
+
+Figure 4.5: Activity Diagram - USER
+
+Dept. of Computer Engineering, MEC, 2024
+
+19
+
+Activitar
+
+4. System Design
+
+Figure 4.6: Activity Diagram - ADMIN
+
+Dept. of Computer Engineering, MEC, 2024
+
+20
+
+Activitar
+
+4. System Design
+
+Figure 4.7: Activity Diagram - GYM EMPLOYEE
+
+Dept. of Computer Engineering, MEC, 2024
+
+21
+
+Chapter 5
+
+Data Flow Diagram
+A Data Flow Diagram (DFD) is a graphical representation of the “flow” of data through a system
+modeling its process aspects. Often it is a preliminary step used to create an overview of the
+system that can later be elaborated. DFDs can also be used for the visualization of data processing
+(structured design) and show what kind of information will be input to and output from the system,
+where the data will come from and go to, and where the data will be stored.
+
+5.1
+
+Level 0 DFD
+
+Level 0 data flow diagram or context diagram is designed to be an abstract view, showing the
+system as a single process with its relationship to external entities.
+
+Figure 5.1: DFD Level 0
+
+22
+
+Activitar
+
+5.2
+
+5. Data Flow Diagram
+
+Level 1 DFD
+
+In level 1 DFD, the single process node from the context diagram is broken down into sub-processes.
+
+Figure 5.2: DFD Level 1
+
+Dept. of Computer Engineering, MEC, 2024
+
+23
+
+Chapter 6
+
+Implementation
+6.1
+
+Algorithm for diet and workout prediction
+
+• K-Nearest Neighbors (KNN): The KNN algorithm is used for recommendation systems,
+where it can recommend workout routines or diet plans based on similarities between users’
+body metrics and lifestyles. In classification, given a new, unlabeled data point, KNN identifies the ”k” closest labeled data points from the training set (nearest neighbors) based on a
+chosen distance metric, often Euclidean distance. The most common class among the nearest
+neighbors is then assigned to the new data point.
+
+6.2
+
+Dataset
+
+• A single dataset is used for training the model using KNN algorithm. This dataset values were
+sourced from the internet and entered manually as no dataset was readily available, which
+suited the requirements for activitar. The dataset contains 500 rows of data .It contains 10
+attributes out if which height,weight,calorie intake,exercise level and job are provided as input
+values and the target attributes are body type,food plan , diet explanation , workout and
+workout information.
+
+6.3
+
+Development Tools
+
+• Django: Django is a high-level Python web framework used for rapid development and
+clean, pragmatic design. It provided the foundation for building the backend logic and web
+application structure of Activitar.
+• HTML: HTML (Hypertext Markup Language) is used for creating the structure and content
+of web pages within the Activitar application.
+• CSS: CSS (Cascading Style Sheets) is used for styling the HTML elements, defining the
+layout, and enhancing the visual presentation of the Activitar user interface.
+• React: React is an open-source JavaScript library used for building user interfaces, particularly for web applications.React is widely used in the industry and has a large ecosystem of
+libraries and tools, making it a popular choice for building modern web applications.
+24
+
+Activitar
+
+6. Implementation
+
+• Python: Python programming language was extensively used for implementing the backend
+logic and algorithms.
+• Scikit-learn: Scikit-learn is a powerful machine learning library that provides simple and efficient tools for data mining and data analysis. It includes various algorithms for classification,
+regression, clustering, dimensionality reduction, and model selection.
+These tools and technologies were chosen for their robustness, flexibility, and compatibility with
+the project requirements.
+
+Dept. of Computer Engineering, MEC, 2024
+
+25
+
+Chapter 7
+
+Testing
+Software testing is an investigation conducted to provide stakeholders with information about
+the quality of the product or service under test. Software testing can also provide an objective,
+independent view of the software to allow the business to appreciate and understand the risks of
+software implementation. Test techniques include the process of executing a program or application
+with the intent of finding software bugs, and to verify that the software product is fit for use.
+Software testing involves the execution of a software component or system component to evaluate
+one or more properties of interest.
+
+7.1
+
+Testing Methodologies
+
+Software Testing is a method to check whether the actual software product matches expected
+requirements and to ensure that software product is defect free. It involves execution of software components using manual or automated tools to evaluate one or more properties of interest.
+The purpose of software testing is to identify errors, gaps or missing requirements in contrast to
+actual requirements. Software testing methodologies are for making sure that the software products/systems developed have been successfully tested to meet their specified requirements and can
+successfully operate in all the anticipated environments with required usability and security. The
+testing methods applied were:
+• Unit Testing: Unit testing is a software development process in which the smallest testable
+parts of an application, called units, are individually and independently scrutinized for proper
+operation.
+• Integration Testing: Integration testing is the phase is software testing in which individual
+software modules are combined and tested as a group. It occurs after unit testing.
+• System Testing: System testing of software or hardware is testing conducted on a complete,
+integrated system to evaluate the systems compliance with its specific requirements. System
+testing falls within the scope of black-box testing, and as such, should require no knowledge
+of the inner design of the code or logic.
+
+26
+
+Activitar
+
+7.2
+
+Unit Testing
+
+7.2.1
+
+Register Gym employee
+
+7. Testing
+
+Precondition: Admin module is accessible.
+Steps:
+1. Input employee details (name, gender, age, username, password, etc.).
+2. Register the gym employee.
+Expected Output: Gym Employee is successfully registered.
+Status: PASS
+
+7.2.2
+
+Add Personal Workouts
+
+Precondition: Gym Employee has access to workout management.
+Steps:
+1. Add personal workouts for users.
+2. Save workouts.
+Expected Output: Personal workouts are successfully added for users.
+Status: PASS
+
+7.2.3
+
+Predict Body Type, Diet, and Workout
+
+Precondition: User is logged in.
+Steps:
+1. Input personal details (height, weight, calories intake, exercise frequency, job type).
+2. Predict body type, diet, and workout.
+Expected Output: Body type, diet, and workout recommendations are generated.
+Status: PASS
+
+7.3
+
+Integration Testing
+
+7.3.1
+
+Login and Registration Integration
+
+Precondition: Admin module is integrated with the database and user interface.
+Steps:
+1. Register new gym employee through admin interface.
+2. Verify the authentication of Gym employee login.
+Dept. of Computer Engineering, MEC, 2024
+
+27
+
+Activitar
+
+7. Testing
+
+Expected Output: Gym employee registration data is stored accurately in the database and
+authentication is successful.
+Status: PASS
+
+7.3.2
+
+Workout Management Integration
+
+Precondition: Gym employee module is integrated with the database and user interface.
+Steps:
+1. Add personal workouts for users through the gym employee interface.
+2. View the predicted workouts of users.
+Expected Output: The workout management functionalities allow seamless interaction between
+the gym employee module, database, and user interface, ensuring accurate storage and retrieval of
+workout data for users.
+Status: PASS
+
+7.3.3
+
+Body Type Prediction Integration
+
+Precondition: User module is integrated with the prediction algorithm and database.
+Steps:
+1. Input personal data for body type prediction through the user interface.
+2. Validate that predicted body type is accurately retrieved from the database.
+Expected Output: Body type prediction results are seamlessly transferred between the user
+module, prediction algorithm, database, and user interface.
+Status: PASS
+
+7.4
+
+System Testing
+
+7.4.1
+
+End-to-End Scenario Testing
+
+Precondition: The entire system is set up with all modules integrated.
+Steps:
+1. Register a new gym employee account through the admin interface.
+2. Log in with valid gym employee credentials through the gym employee interface.
+3. Register and login a new user account through the user interface.
+Expected Output: With successful verification of admin, employee, and user functionalities, the
+system demonstrates its capability to handle registration, authentication, and user interactions
+effectively.
+Status: PASS
+
+Dept. of Computer Engineering, MEC, 2024
+
+28
+
+Chapter 8
+
+Graphical User Interface
+8.1
+
+GUI Overview
+
+A graphical user interface, or GUI, is the visual way you interact with your computer or other
+devices. Instead of typing commands, you use pictures, icons, and menus to do things like open
+programs, move files, and change settings. It’s like navigating through a digital world using images
+and symbols rather than just words. GUIs make using computers much easier for most people
+because they’re more intuitive and less reliant on knowing specific commands. So, whenever you
+click on icons, drag windows around, or use dropdown menus, you’re using a GUI
+
+8.2
+
+Main GUI Components
+
+8.2.1
+
+Admin Module
+
+• Dashboard: Upon logging in, the admin is greeted with a dashboard displaying key metrics
+like total gym employees, batches, payments pending, complaints received, etc.
+• Gym employee Management: A dedicated section where the admin can add, update, or delete
+employee details. This includes a form for adding new gym employees and a table to display
+existing ones.
+• Batch Management:Here, the admin can create new batches and assign gym employees to
+them. A calendar view or a list of batches with their respective assigned gym employees is
+provided.
+• Payment Verification: A page where the admin can view pending payments, verify them, and
+mark them as completed. This might include a table with user details and payment status.
+• Feedback: Sections for managing user complaints and feedback. The admin can view, respond
+to, and resolve complaints, as well as analyze feedback for improving the system.
+
+8.2.2
+
+User Module
+
+• Registration/Login: A user-friendly registration form for new users to sign up, and a login
+page for existing users to access their accounts.
+29
+
+Activitar
+
+8. Graphical User Interface
+
+• Payment: A payment gateway integrated into the system where users can make payments
+for membership or services. This might include options for different payment methods and a
+status indicator for pending/verified payments.
+• User Dashboard: After logging in, users are presented with a personalized dashboard showing
+their assigned batch, upcoming workouts, attendance status, etc.
+• Body Metrics Predictions: Sections for entering personal details (height, weight, etc.) and
+predicting body type, diet, and workout plans. This might include interactive forms with
+predictive algorithms and visualization tools for BMI.
+• Workout Plans: A section to view assigned workouts, both predicted by the system and added
+by gym employees. Users can see detailed instructions, track progress, and provide feedback.
+• Feedback: A feature for users to provide feedback about the app, their experience, and
+suggestions for improvement.
+
+8.2.3
+
+Gym employee Module
+
+• Dashboard: Similar to the admin dashboard, the gym employee dashboard provides an
+overview of their assigned users, upcoming tasks, attendance status, etc.
+• User Details: A section to view details of users assigned to the gym employee’s batch. This
+includes information like height, weight, BMI, etc., presented in a user-friendly format.
+• Workout Management: Tools for managing workout plans, equipment, and routines. This
+could include forms for adding/editing workouts, tracking equipment status, etc.
+• Attendance: A feature to mark attendance for users in the gym employee’s batch. This might
+be a simple table or a list of users with checkboxes for marking attendance.
+• Predicted Workouts: A section to view workout plans predicted by users. This could be
+presented as a list or calendar view, with options to add/edit workouts as needed.
+
+Dept. of Computer Engineering, MEC, 2024
+
+30
+
+Activitar
+
+8.2.4
+
+8. Graphical User Interface
+
+Screenshots
+
+Figure 8.1: Home page
+.
+
+Dept. of Computer Engineering, MEC, 2024
+
+31
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.2: Login Page
+
+Figure 8.3: User - batch details view
+
+Dept. of Computer Engineering, MEC, 2024
+
+32
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.4: User registration
+
+Dept. of Computer Engineering, MEC, 2024
+
+33
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.5: User prediction(Input)
+
+Figure 8.6: Predicted diet
+
+Dept. of Computer Engineering, MEC, 2024
+
+34
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.7: User predicted workout
+
+Dept. of Computer Engineering, MEC, 2024
+
+35
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.8: User view attendance
+
+Figure 8.9: Display current BMI
+
+Dept. of Computer Engineering, MEC, 2024
+
+36
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.10: User feedback
+
+Figure 8.11: Gym Employee view user details
+
+Dept. of Computer Engineering, MEC, 2024
+
+37
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.12: Gym Employee - view predicted workout
+
+Figure 8.13: Gym Employee - Add user specific workouts
+
+Dept. of Computer Engineering, MEC, 2024
+
+38
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.14: Gym Employee - Manage equipmnts at the gym
+
+Figure 8.15: Admin Homepage
+
+Dept. of Computer Engineering, MEC, 2024
+
+39
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.16: Gym employee registration by admin
+
+Figure 8.17: Admin add batches
+
+Dept. of Computer Engineering, MEC, 2024
+
+40
+
+Activitar
+
+8. Graphical User Interface
+
+Figure 8.18: View feedback
+
+Figure 8.19: Admin - view paymenst
+
+Dept. of Computer Engineering, MEC, 2024
+
+41
+
+Chapter 9
+
+Results
+The Activitar project, utilizing a manually entered Indian dataset, achieved an accuracy of 55
+percent in predicting user workouts and recommending personalized fitness plans. This accuracy is
+attributed to the dataset’s specificity to the Indian demographic and lifestyle, which may not fully
+capture the diversity and variations present in other populations.
+However, when utilizing foreign datasets, the accuracy of the prediction model can significantly
+improve, reaching up to 80 percent. Foreign datasets encompass a broader range of demographics,
+lifestyles, and genetic factors, leading to more accurate predictions and recommendations for users
+from diverse backgrounds.
+
+42
+
+Chapter 10
+
+Conclusion
+Activitar represents a shift in fitness technology, offering personalized health guidance accessible to
+all.By leveraging machine learning, it predicts future health conditions and recommends proactive
+measures, transcending the limitations of traditional fitness systems. Seamlessly integrating with
+gymnasiums, activitar provides tailored fitness routines curated by both algorithms and experienced
+trainers, empowering users to achieve optimal well-being.
+
+43
+
+Chapter 11
+
+Future Scope
+Activitar potential for future enhancements and expansions. Some areas for future development
+include:
+
+11.1
+
+Real-time data monitoring
+
+Implementing more sophisticated machine learning algorithms to improve the personalization of
+workout routines and diet plans based on factors like real-time data monitoring, and evolving user
+preferences.
+
+11.2
+
+Integration of wearable devices
+
+Incorporating wearable devices such as fitness trackers or smartwatches to collect real-time data
+on users’ activity levels, heart rate, and sleep patterns. This data can be used to further tailor
+workout routines and provide personalized recommendations.
+
+11.3
+
+Social Features
+
+Introducing social features such as user communities, challenges, or leaderboards to foster engagement and motivation among users. This could include features for sharing progress, achievements,
+and workout routines with friends or participating in group challenges.
+
+11.4
+
+Expanded services
+
+Partnering with nutritionists, fitness experts, or wellness coaches to provide additional content and
+services such as meal planning, recipe suggestions, virtual coaching sessions, or live workout classes.
+
+44
+
+References
+[1] D. Mogaveera, V. Mathur and S. Waghela, ”e-Health Monitoring System with Diet and
+Fitness Recommendation using Machine Learning,” 2021 6th International Conference on
+Inventive Computation Technologies (ICICT), Coimbatore, India, 2021, pp. 694-700, doi:
+10.1109/ICICT50816.2021.9358605.
+[2] M. Tom, S. Wibovo and S. Williams, ”Optimized daily diet composition for a nutritionally
+balanced diet: An application of Fuzzy Multiple Objective Linear Programming,” 2016 IEEE
+International Conference on Fuzzy Systems (FUZZ-IEEE), Vancouver, BC, Canada, 2016,
+pp. 1628-1634, doi: 10.1109/FUZZ-IEEE.2016.7737885.
+[3] A. Singh, N. Kashyap and R. Garg, ”Fuzzy based approach for diet prediction”, 2019 9th International Conference on Cloud Computing, Data Science Engineering (Confluence), Noida,
+India, 2019, pp. 377-381, doi: 10.1109/CONFLUENCE.2019.8776917.
+[4] L. Hu, W. Zhang, C. Zhou, G. Lu and H. Bai, ”Automatic Diet Recording Based on Deep
+Learning,” 2018 Chinese Automation Congress (CAC), Xi’an, China, 2018, pp. 3778-3782,
+doi: 10.1109/CAC.2018.8623474.
+[5] Mahyari A, Pirolli P, LeBlanc JA, ”Real-Time Learning from an Expert in Deep Recommendation Systems with Application to mHealth for Physical Exercises”. IEEE J Biomed
+Health Inform. 2022 Aug;26(8):4281-4290. doi: 10.1109/JBHI.2022.3167314. Epub 2022 Aug
+11. PMID: 35417361; PMCID: PMC9435440.
+[6] J. -H. Kim, J. -H. Lee, J. -S. Park, Y. -H. Lee and K. -W. Rim, ”Design of Diet Recommendation System for Healthcare Service Based on User Information,” 2009 Fourth International
+Conference on Computer Sciences and Convergence Information Technology, Seoul, Korea
+(South), 2009, pp. 516-518, doi: 10.1109/ICCIT.2009.293.
+[7] A. Hussain, K. Zafar and A. R. Baig, ”Fog-Centric IoT Based Framework for Healthcare
+Monitoring, Management and Early Warning System,” in IEEE Access, vol. 9, pp. 7416874179, 2021, doi: 10.1109/ACCESS.2021.3080237.
+[8] C. -T. Hsu, Y. -H. Chang, J. -S. Chen, H. -H. Lin and J. -Y. Chou, ”Implementation of IoT
+Device on Public Fitness Equipment for Health Physical Fitness Improvement,” 2020 International Conference on Mathematics and Computers in Science and Engineering (MACISE),
+Madrid, Spain, 2020, pp. 236-239, doi: 10.1109/MACISE49704.2020.00050.
+[9] M. Popescu, G. Chronis, R. Ohol, M. Skubic and M. Rantz, ”An eldercare electronic health
+record system for predictive health assessment,” 2011 IEEE 13th International Conference
+45
+
+Activitar
+
+References
+
+on e-Health Networking, Applications and Services, Columbia, MO, USA, 2011, pp. 193-196,
+doi: 10.1109/HEALTH.2011.6026742.
+[10] J. C. C. Tseng et al., ”An interactive healthcare system with personalized diet and exercise
+guideline recommendation,” 2015 Conference on Technologies and Applications of Artificial
+Intelligence (TAAI), Tainan, Taiwan, 2015, pp. 525-532, doi: 10.1109/TAAI.2015.7407106.
+
+Dept. of Computer Engineering, MEC, 2024
+
+46
+
+

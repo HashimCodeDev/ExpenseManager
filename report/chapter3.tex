@@ -1,0 +1,114 @@
+\chapter{Software Requirement Specification}
+
+\section{Introduction}
+
+\subsection{Purpose}
+
+The Software Requirements Specification (SRS) document for Expense Manager serves as a comprehensive guide outlining the functional and non-functional requirements, constraints, and specifications of the software. Its primary purpose is to provide a clear and detailed understanding of the system's functionalities, ensuring that stakeholders, including developers, designers, testers, and users, have a unified vision of the software's scope and objectives.
+
+\subsection{Intended Audience}
+
+This document is crafted for financial management professionals, individual users, and all stakeholders engaged in the development and utilization of Expense Manager. It is also applicable to other entities in the financial technology industry, such as fintech companies and similar organizations seeking innovative solutions.
+
+\subsection{Project Scope}
+
+Expense Manager is engineered to offer comprehensive financial management guidance for individuals and organizations pursuing better financial control and planning. It integrates modern web technologies and database management to optimize personalized financial tracking and enhance decision-making in expense and income management.
+
+\section{Overall Description}
+
+\subsection{Product Perspective}
+
+Expense Manager is a web-based software project that involves creating an intuitive platform that leverages secure database management and modern web technologies to provide personalized expense tracking, income management, and financial reporting capabilities. Designed for scalability, the system accommodates a growing user base and adapts to emerging technologies.
+
+\subsection{Product Functions}
+
+\begin{itemize}
+\item Record user transactions, categorize expenses and income, and track financial progress to provide comprehensive financial oversight.
+\item Generate personalized financial reports and analytics based on user transaction patterns and spending habits.
+\item Analyze data to provide insights, identify trends, and optimize financial goal achievement.
+\end{itemize}
+
+\subsection{User Classes and Characteristics}
+
+\textbf{Users:} This includes individuals managing personal finances, small business owners, financial planners, and other stakeholders. Users must register and create accounts which are verified with the database. Once verified, users can log in to their accounts and explore the comprehensive financial management services offered by Expense Manager.
+
+\subsection{Operating Environment}
+
+The operating environment for this web application using JSP, Servlets, and MySQL comprises a backend built with Java Servlets running on a web server, interacting with MySQL database. The frontend, developed with HTML5, CSS3, and JavaScript, operates in web browsers and communicates with the Java backend through HTTP requests and responses.
+
+\subsection{Design and Implementation Constraints}
+
+Expense Manager must adhere to data privacy and security regulations. It should support various user categories (individuals, businesses, etc.) and maintain compatibility with modern web browsers while ensuring responsive design across different devices.
+
+\section{Hardware and Software Requirements}
+
+\subsection{Hardware Requirements}
+
+\textbf{Server Requirements:}
+\begin{itemize}
+\item Processor: Intel Core i3 or equivalent (minimum)
+\item RAM: 4 GB (minimum), 8 GB (recommended)
+\item Storage: 20 GB available disk space
+\item Network: Broadband internet connection
+\end{itemize}
+
+\textbf{Client Requirements:}
+\begin{itemize}
+\item Processor: Any modern processor
+\item RAM: 2 GB (minimum)
+\item Network: Internet connection
+\item Display: 1024x768 resolution (minimum)
+\end{itemize}
+
+\subsection{Software Requirements}
+
+\textbf{Backend:} Java Servlets and JSP compatible with Java 11 and above.\\
+\textbf{Frontend:} HTML5, CSS3, JavaScript\\
+\textbf{Database:} MySQL 8.0+ for data storage\\
+\textbf{Application Server:} Apache Tomcat 9.0+\\
+\textbf{Build Tool:} Apache Maven 3.6+\\
+\textbf{Development Environment:} Any Java IDE (Eclipse, IntelliJ IDEA, etc.)
+
+\section{Functional Requirements}
+
+\subsection{User Authentication}
+
+The system provides secure user registration and login functionality using username and password combinations with SHA-256 password hashing.
+
+\subsection{Transaction Management}
+
+Users can add, edit, and delete both expense and income transactions with proper categorization and date tracking.
+
+\subsection{Financial Reporting}
+
+The system offers comprehensive reporting capabilities with filtering options by date range, category, and transaction type, including CSV export functionality.
+
+\subsection{Dashboard Analytics}
+
+Real-time financial dashboard displaying total income, expenses, net balance, and recent transaction summaries.
+
+\subsection{Data Security}
+
+Comprehensive data protection through secure authentication, input validation, and SQL injection prevention measures.
+
+\section{Non-functional Requirements}
+
+\subsection{Performance Requirements}
+
+System should provide fast and responsive user interactions with page load times under 3 seconds.
+
+\subsection{Scalability}
+
+System must be capable of handling multiple concurrent users and large volumes of transaction data.
+
+\subsection{Security Requirements}
+
+Ensure data security and privacy through encryption, secure session management, and protection against common web vulnerabilities.
+
+\subsection{Reliability}
+
+System must be reliable with minimal downtime and robust error handling mechanisms.
+
+\section{Other Requirements}
+
+The system must ensure compliance with data protection regulations and maintain user privacy. Additionally, proper access controls must be implemented to ensure that only authorized users can access and modify financial data. Transparency in data handling and processing is crucial for maintaining user trust and system integrity.

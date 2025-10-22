@@ -1,0 +1,30 @@
+@startuml dfd0
+!theme plain
+skinparam backgroundColor white
+skinparam defaultFontName Arial
+skinparam linetype ortho
+skinparam arrowThickness 1.5
+skinparam arrowColor black
+skinparam rectangleBorderColor black
+skinparam circleBorderColor black
+
+' External Entity (Square)
+rectangle "User" as user #white
+
+' Process (Circle with number)
+circle "0\nExpense Manager\nSystem" as system #white
+
+' Data Store (Open rectangle)
+rectangle "D1 | Database" as db #white
+
+' Position elements
+user -[hidden]-> system
+system -[hidden]-> db
+
+' Data Flows with labels
+user -right-> system : User Credentials +\nTransaction Data +\nQuery Requests
+system -left-> user : Authentication Status +\nDashboard Data +\nReports
+system -down-> db : Store Data
+db -up-> system : Retrieve Data
+
+@enduml
