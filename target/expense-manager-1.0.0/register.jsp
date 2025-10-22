@@ -30,9 +30,8 @@
                         message = "Passwords do not match";
                     } else {
                         UserDAO userDAO = new UserDAO();
-                        User newUser = new User(username, email, password);
                         
-                        if (userDAO.registerUser(newUser)) {
+                        if (userDAO.registerUser(username, email, password)) {
                             message = "Registration successful! You can now login.";
                         } else {
                             message = "Registration failed. Username or email may already exist.";
