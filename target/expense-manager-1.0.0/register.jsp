@@ -33,11 +33,14 @@
             background: var(--dark);
             color: var(--light);
             min-height: 100vh;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-x: hidden;
+            overflow: hidden;
             position: relative;
+            margin: 0;
+            padding: 0;
         }
 
         /* Animated Background */
@@ -95,7 +98,9 @@
             z-index: 10;
             width: 100%;
             max-width: 480px;
-            padding: 24px;
+            max-height: 100vh;
+            padding: 16px;
+            overflow-y: auto;
             animation: fadeInUp 0.8s ease-out;
         }
 
@@ -113,7 +118,7 @@
         /* Header */
         .header {
             text-align: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         .logo-icon {
@@ -196,13 +201,13 @@
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
-            padding: 40px;
+            padding: 32px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         /* Form */
         .form-group {
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         label {
@@ -360,15 +365,49 @@
         /* Responsive */
         @media (max-width: 640px) {
             .container {
-                padding: 16px;
+                padding: 12px;
+                max-height: 100vh;
             }
 
             .card {
-                padding: 32px 24px;
+                padding: 24px 20px;
+            }
+
+            .header {
+                margin-bottom: 20px;
             }
 
             .header h1 {
                 font-size: 28px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+        }
+
+        @media (max-height: 700px) {
+            .header {
+                margin-bottom: 16px;
+            }
+
+            .card {
+                padding: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            .logo-icon {
+                width: 48px;
+                height: 48px;
+                margin-bottom: 16px;
+                font-size: 24px;
+            }
+
+            .header h1 {
+                font-size: 24px;
             }
         }
     </style>
