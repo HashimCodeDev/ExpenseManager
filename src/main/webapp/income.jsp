@@ -79,197 +79,201 @@ List<Income> incomes = incomeDAO.getIncomeByUser(user.getId());
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Income - ExpenseManager</title>
+    <title>Income - ExpenseFlow</title>
     <%@ include file="components/modern-head.jsp" %>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <%@ include file="components/modern-nav.jsp" %>
+<body>
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
     
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <div class="logo-icon">💰</div>
+                <span>ExpenseFlow</span>
+            </div>
+            <div class="nav-links">
+                <a href="dashboard.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="expenses.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    Expenses
+                </a>
+                <a href="income.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                    </svg>
+                    Income
+                </a>
+                <a href="reports.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Reports
+                </a>
+                <form action="logout" method="post" style="margin: 0;">
+                    <button type="submit" class="btn-logout">Logout</button>
+                </form>
+            </div>
+        </nav>
+        
         <% if (!message.isEmpty()) { %>
-            <div class="mb-6 <%= message.contains("successfully") ? "bg-green-50 border-green-200 text-green-800" : "bg-red-50 border-red-200 text-red-800" %> border px-4 py-3 rounded-lg flex items-center space-x-3 animate-fade-in-up">
-                <svg class="w-5 h-5 <%= message.contains("successfully") ? "text-green-400" : "text-red-400" %>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <% if (message.contains("successfully")) { %>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    <% } else { %>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    <% } %>
-                </svg>
+            <div class="alert <%= message.contains("successfully") ? "alert-success" : "alert-error" %> animate-fade-in">
+                <span style="font-size: 18px;"><%= message.contains("successfully") ? "✓" : "✗" %></span>
                 <span><%= message %></span>
             </div>
         <% } %>
         
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
-            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h2 class="text-lg font-semibold text-gray-900"><%= "edit".equals(action) ? "Edit Income" : "Add New Income" %></h2>
-            </div>
-            <div class="p-6">
-                <%
-                Income editIncome = null;
-                if ("edit".equals(action)) {
-                    String editIdStr = request.getParameter("id");
-                    if (editIdStr != null) {
-                        int editId = Integer.parseInt(editIdStr);
-                        for (Income inc : incomes) {
-                            if (inc.getId() == editId) {
-                                editIncome = inc;
-                                break;
-                            }
+        <div class="card animate-fade-in">
+            <h2 style="font-size: 20px; font-weight: 600; color: var(--light); margin-bottom: 24px;"><%= "edit".equals(action) ? "Edit Income" : "Add New Income" %></h2>
+            
+            <%
+            Income editIncome = null;
+            if ("edit".equals(action)) {
+                String editIdStr = request.getParameter("id");
+                if (editIdStr != null) {
+                    int editId = Integer.parseInt(editIdStr);
+                    for (Income inc : incomes) {
+                        if (inc.getId() == editId) {
+                            editIncome = inc;
+                            break;
                         }
                     }
                 }
-                %>
+            }
+            %>
+            
+            <form method="post" action="income.jsp">
+                <input type="hidden" name="action" value="<%= "edit".equals(action) ? "edit" : "add" %>">
+                <% if (editIncome != null) { %>
+                    <input type="hidden" name="id" value="<%= editIncome.getId() %>">
+                <% } %>
                 
-                <form method="post" action="income.jsp" class="space-y-6">
-                    <input type="hidden" name="action" value="<%= "edit".equals(action) ? "edit" : "add" %>">
-                    <% if (editIncome != null) { %>
-                        <input type="hidden" name="id" value="<%= editIncome.getId() %>">
-                    <% } %>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description <span class="text-red-500">*</span></label>
-                            <input type="text" id="description" name="description" required
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors duration-200"
-                                   placeholder="Enter income description" 
-                                   value="<%= editIncome != null ? editIncome.getDescription() : "" %>">
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <label for="amount" class="block text-sm font-medium text-gray-700">Amount <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 text-sm">$</span>
-                                </div>
-                                <input type="number" id="amount" name="amount" step="0.01" required
-                                       class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors duration-200"
-                                       placeholder="0.00" 
-                                       value="<%= editIncome != null ? editIncome.getAmount() : "" %>">
-                            </div>
-                        </div>
+                <div class="grid grid-cols-2">
+                    <div class="form-group">
+                        <label class="form-label" for="description">Description <span style="color: var(--success);">*</span></label>
+                        <input type="text" id="description" name="description" required class="form-input"
+                               placeholder="Enter income description" 
+                               value="<%= editIncome != null ? editIncome.getDescription() : "" %>">
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="amount">Amount <span style="color: var(--success);">*</span></label>
+                        <input type="number" id="amount" name="amount" step="0.01" required class="form-input"
+                               placeholder="0.00" 
+                               value="<%= editIncome != null ? editIncome.getAmount() : "" %>">
+                    </div>
+                </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="category" class="block text-sm font-medium text-gray-700">Category <span class="text-red-500">*</span></label>
-                            <select id="category" name="category" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors duration-200 bg-white">
-                                <option value="">Select Category</option>
-                                <option value="Job" <%= editIncome != null && "Job".equals(editIncome.getCategory()) ? "selected" : "" %>>💼 Job</option>
-                                <option value="Freelance" <%= editIncome != null && "Freelance".equals(editIncome.getCategory()) ? "selected" : "" %>>💻 Freelance</option>
-                                <option value="Investment" <%= editIncome != null && "Investment".equals(editIncome.getCategory()) ? "selected" : "" %>>📈 Investment</option>
-                                <option value="Business" <%= editIncome != null && "Business".equals(editIncome.getCategory()) ? "selected" : "" %>>🏢 Business</option>
-                                <option value="Gift" <%= editIncome != null && "Gift".equals(editIncome.getCategory()) ? "selected" : "" %>>🎁 Gift</option>
-                                <option value="Other" <%= editIncome != null && "Other".equals(editIncome.getCategory()) ? "selected" : "" %>>📦 Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <label for="date" class="block text-sm font-medium text-gray-700">Date <span class="text-red-500">*</span></label>
-                            <input type="date" id="date" name="date" required
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors duration-200"
-                                   value="<%= editIncome != null ? editIncome.getDate() : "" %>">
-                        </div>
+                <div class="grid grid-cols-2">
+                    <div class="form-group">
+                        <label class="form-label" for="category">Category <span style="color: var(--success);">*</span></label>
+                        <select id="category" name="category" required class="form-input">
+                            <option value="">Select Category</option>
+                            <option value="Job" <%= editIncome != null && "Job".equals(editIncome.getCategory()) ? "selected" : "" %>>💼 Job</option>
+                            <option value="Freelance" <%= editIncome != null && "Freelance".equals(editIncome.getCategory()) ? "selected" : "" %>>💻 Freelance</option>
+                            <option value="Investment" <%= editIncome != null && "Investment".equals(editIncome.getCategory()) ? "selected" : "" %>>📈 Investment</option>
+                            <option value="Business" <%= editIncome != null && "Business".equals(editIncome.getCategory()) ? "selected" : "" %>>🏢 Business</option>
+                            <option value="Gift" <%= editIncome != null && "Gift".equals(editIncome.getCategory()) ? "selected" : "" %>>🎁 Gift</option>
+                            <option value="Other" <%= editIncome != null && "Other".equals(editIncome.getCategory()) ? "selected" : "" %>>📦 Other</option>
+                        </select>
                     </div>
                     
-                    <div class="flex space-x-4">
-                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                            <%= "edit".equals(action) ? "Update Income" : "Add Income" %>
-                        </button>
-                        <% if ("edit".equals(action)) { %>
-                            <a href="income.jsp" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">Cancel</a>
-                        <% } else { %>
-                            <button type="reset" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">Clear Form</button>
-                        <% } %>
+                    <div class="form-group">
+                        <label class="form-label" for="date">Date <span style="color: var(--success);">*</span></label>
+                        <input type="date" id="date" name="date" required class="form-input"
+                               value="<%= editIncome != null ? editIncome.getDate() : "" %>">
                     </div>
-                </form>
-            </div>
+                </div>
+                
+                <div style="display: flex; gap: 16px; margin-top: 24px;">
+                    <button type="submit" class="btn btn-success">
+                        <%= "edit".equals(action) ? "Update Income" : "Add Income" %>
+                    </button>
+                    <% if ("edit".equals(action)) { %>
+                        <a href="income.jsp" class="btn" style="background: var(--gray); color: white;">Cancel</a>
+                    <% } else { %>
+                        <button type="reset" class="btn" style="background: var(--gray); color: white;">Clear Form</button>
+                    <% } %>
+                </div>
+            </form>
         </div>
         
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h2 class="text-lg font-semibold text-gray-900">Your Income</h2>
-            </div>
-            <div class="p-6">
-                <% if (incomes.isEmpty()) { %>
-                    <div class="text-center py-12">
-                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                        </svg>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No income entries yet</h3>
-                        <p class="text-gray-500">Start tracking your income by adding your first entry above.</p>
-                    </div>
-                <% } else { %>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="border-b border-gray-200">
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Date</th>
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Description</th>
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Category</th>
-                                    <th class="text-right py-3 px-4 font-medium text-gray-700">Amount</th>
-                                    <th class="text-center py-3 px-4 font-medium text-gray-700">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <%
-                                double total = 0;
-                                for (Income income : incomes) {
-                                    total += income.getAmount();
-                                %>
-                                <tr class="hover:bg-gray-50 transition-colors duration-200">
-                                    <td class="py-3 px-4 text-sm text-gray-900"><%= income.getDate() %></td>
-                                    <td class="py-3 px-4 text-sm text-gray-900"><%= income.getDescription() %></td>
-                                    <td class="py-3 px-4">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                            <%= income.getCategory() %>
-                                        </span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm font-medium text-right text-green-600">$<%= String.format("%.2f", income.getAmount()) %></td>
-                                    <td class="py-3 px-4 text-center">
-                                        <div class="flex justify-center space-x-2">
-                                            <a href="income.jsp?action=edit&id=<%= income.getId() %>" 
-                                               class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-medium transition-colors duration-200">
-                                                Edit
-                                            </a>
-                                            <a href="income.jsp?action=delete&id=<%= income.getId() %>" 
-                                               class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-medium transition-colors duration-200"
-                                               onclick="return confirm('Are you sure you want to delete this income?')">
-                                                Delete
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <% } %>
-                            </tbody>
-                            <tfoot>
-                                <tr class="bg-gray-50 font-semibold">
-                                    <td colspan="3" class="py-3 px-4 text-sm text-gray-900">Total Income:</td>
-                                    <td class="py-3 px-4 text-sm font-bold text-right text-green-600">$<%= String.format("%.2f", total) %></td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                <% } %>
-            </div>
+        <div class="card animate-fade-in">
+            <h2 style="font-size: 20px; font-weight: 600; color: var(--light); margin-bottom: 20px;">Your Income</h2>
+            
+            <% if (incomes.isEmpty()) { %>
+                <div style="text-align: center; padding: 48px 0;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">💰</div>
+                    <h3 style="font-size: 18px; font-weight: 500; color: var(--light); margin-bottom: 8px;">No income entries yet</h3>
+                    <p style="color: var(--gray);">Start tracking your income by adding your first entry above.</p>
+                </div>
+            <% } else { %>
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th style="text-align: right;">Amount</th>
+                                <th style="text-align: center;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                            double total = 0;
+                            for (Income income : incomes) {
+                                total += income.getAmount();
+                            %>
+                            <tr>
+                                <td><%= income.getDate() %></td>
+                                <td><%= income.getDescription() %></td>
+                                <td>
+                                    <span class="badge badge-success">
+                                        <%= income.getCategory() %>
+                                    </span>
+                                </td>
+                                <td style="text-align: right; font-weight: 600; color: var(--success);">$<%= String.format("%.2f", income.getAmount()) %></td>
+                                <td style="text-align: center;">
+                                    <div style="display: flex; justify-content: center; gap: 8px;">
+                                        <a href="income.jsp?action=edit&id=<%= income.getId() %>" class="btn btn-primary" style="padding: 4px 12px; font-size: 12px;">
+                                            Edit
+                                        </a>
+                                        <a href="income.jsp?action=delete&id=<%= income.getId() %>" class="btn btn-danger" style="padding: 4px 12px; font-size: 12px;"
+                                           onclick="return confirm('Are you sure you want to delete this income?')">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                        <tfoot>
+                            <tr style="background: rgba(15, 23, 42, 0.5); font-weight: 600;">
+                                <td colspan="3">Total Income:</td>
+                                <td style="text-align: right; font-weight: 700; color: var(--success);">$<%= String.format("%.2f", total) %></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            <% } %>
         </div>
-    </main>
+    </div>
 
     <script>
         <% if (!"edit".equals(action)) { %>
             document.getElementById('date').valueAsDate = new Date();
         <% } %>
-        
-        setTimeout(() => {
-            document.querySelectorAll('[class*="bg-green-50"], [class*="bg-red-50"]').forEach(alert => {
-                if (alert.textContent.includes('successfully') || alert.textContent.includes('Error')) {
-                    alert.style.opacity = '0';
-                    alert.style.transform = 'translateY(-20px)';
-                    setTimeout(() => alert.remove(), 300);
-                }
-            });
-        }, 5000);
     </script>
 </body>
 </html>

@@ -1,276 +1,704 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.expense.model.*, com.expense.dao.*, java.util.*, java.sql.Date" %>
 <%
-User user = (User) session.getAttribute("user");
-if (user == null) {
-    response.sendRedirect("login.jsp");
-    return;
-}
+    User user = (User) session.getAttribute("user");
+    if (user == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
 
-ExpenseDAO expenseDAO = new ExpenseDAO();
-String action = request.getParameter("action");
-String message = "";
+    ExpenseDAO expenseDAO = new ExpenseDAO();
+    String action = request.getParameter("action");
+    String message = "";
 
-if ("POST".equals(request.getMethod())) {
-    if ("add".equals(action)) {
-        String description = request.getParameter("description");
-        String amountStr = request.getParameter("amount");
-        String category = request.getParameter("category");
-        String dateStr = request.getParameter("date");
-        
-        if (description != null && amountStr != null && category != null && dateStr != null) {
-            try {
-                double amount = Double.parseDouble(amountStr);
-                Date date = Date.valueOf(dateStr);
-                Expense expense = new Expense(user.getId(), description, amount, category, date);
-                
-                if (expenseDAO.addExpense(expense)) {
-                    message = "Expense added successfully!";
-                } else {
-                    message = "Failed to add expense.";
+    if ("POST".equals(request.getMethod())) {
+        if ("add".equals(action)) {
+            String description = request.getParameter("description");
+            String amountStr = request.getParameter("amount");
+            String category = request.getParameter("category");
+            String dateStr = request.getParameter("date");
+
+            if (description != null && amountStr != null && category != null && dateStr != null) {
+                try {
+                    double amount = Double.parseDouble(amountStr);
+                    Date date = Date.valueOf(dateStr);
+                    Expense expense = new Expense(user.getId(), description, amount, category, date);
+
+                    if (expenseDAO.addExpense(expense)) {
+                        message = "Expense added successfully!";
+                    } else {
+                        message = "Failed to add expense.";
+                    }
+                } catch (Exception e) {
+                    message = "Error: " + e.getMessage();
                 }
-            } catch (Exception e) {
-                message = "Error: " + e.getMessage();
+            }
+        } else if ("edit".equals(action)) {
+            String idStr = request.getParameter("id");
+            String description = request.getParameter("description");
+            String amountStr = request.getParameter("amount");
+            String category = request.getParameter("category");
+            String dateStr = request.getParameter("date");
+
+            if (idStr != null && description != null && amountStr != null && category != null && dateStr != null) {
+                try {
+                    int id = Integer.parseInt(idStr);
+                    double amount = Double.parseDouble(amountStr);
+                    Date date = Date.valueOf(dateStr);
+                    Expense expense = new Expense(user.getId(), description, amount, category, date);
+                    expense.setId(id);
+
+                    if (expenseDAO.updateExpense(expense)) {
+                        message = "Expense updated successfully!";
+                    } else {
+                        message = "Failed to update expense.";
+                    }
+                } catch (Exception e) {
+                    message = "Error: " + e.getMessage();
+                }
             }
         }
-    } else if ("edit".equals(action)) {
+    } else if ("delete".equals(action)) {
         String idStr = request.getParameter("id");
-        String description = request.getParameter("description");
-        String amountStr = request.getParameter("amount");
-        String category = request.getParameter("category");
-        String dateStr = request.getParameter("date");
-        
-        if (idStr != null && description != null && amountStr != null && category != null && dateStr != null) {
+        if (idStr != null) {
             try {
                 int id = Integer.parseInt(idStr);
-                double amount = Double.parseDouble(amountStr);
-                Date date = Date.valueOf(dateStr);
-                Expense expense = new Expense(user.getId(), description, amount, category, date);
-                expense.setId(id);
-                
-                if (expenseDAO.updateExpense(expense)) {
-                    message = "Expense updated successfully!";
+                if (expenseDAO.deleteExpense(id, user.getId())) {
+                    message = "Expense deleted successfully!";
                 } else {
-                    message = "Failed to update expense.";
+                    message = "Failed to delete expense.";
                 }
             } catch (Exception e) {
                 message = "Error: " + e.getMessage();
             }
         }
     }
-} else if ("delete".equals(action)) {
-    String idStr = request.getParameter("id");
-    if (idStr != null) {
-        try {
-            int id = Integer.parseInt(idStr);
-            if (expenseDAO.deleteExpense(id, user.getId())) {
-                message = "Expense deleted successfully!";
-            } else {
-                message = "Failed to delete expense.";
-            }
-        } catch (Exception e) {
-            message = "Error: " + e.getMessage();
-        }
-    }
-}
 
-List<Expense> expenses = expenseDAO.getExpensesByUser(user.getId());
+    List<Expense> expenses = expenseDAO.getExpensesByUser(user.getId());
 %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Expenses - ExpenseManager</title>
-    <%@ include file="components/modern-head.jsp" %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expenses - ExpenseFlow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --card-bg: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -200px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            top: 50%;
+            left: 50%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            color: var(--light);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Alert */
+        .alert {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        .alert-success {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--light);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            text-align: left;
+            padding: 16px;
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            padding: 16px;
+            font-size: 14px;
+        }
+
+        tfoot tr {
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tfoot td {
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+
+        .empty-state p {
+            color: var(--gray);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: scroll;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <%@ include file="components/modern-nav.jsp" %>
-    
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <% if (!message.isEmpty()) { %>
-            <div class="mb-6 <%= message.contains("successfully") ? "bg-green-50 border-green-200 text-green-800" : "bg-red-50 border-red-200 text-red-800" %> border px-4 py-3 rounded-lg flex items-center space-x-3 animate-fade-in-up">
-                <svg class="w-5 h-5 <%= message.contains("successfully") ? "text-green-400" : "text-red-400" %>" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <% if (message.contains("successfully")) { %>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                    <% } else { %>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                    <% } %>
+<body>
+<div class="bg-animation">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
+
+<div class="container">
+    <nav class="navbar">
+        <div class="logo">
+            <div class="logo-icon">💰</div>
+            <span>ExpenseFlow</span>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.jsp" class="nav-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                 </svg>
-                <span><%= message %></span>
-            </div>
-        <% } %>
-        
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
-            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h2 class="text-lg font-semibold text-gray-900"><%= "edit".equals(action) ? "Edit Expense" : "Add New Expense" %></h2>
-            </div>
-            <div class="p-6">
-                <%
-                Expense editExpense = null;
-                if ("edit".equals(action)) {
-                    String editIdStr = request.getParameter("id");
-                    if (editIdStr != null) {
-                        int editId = Integer.parseInt(editIdStr);
-                        for (Expense exp : expenses) {
-                            if (exp.getId() == editId) {
-                                editExpense = exp;
-                                break;
-                            }
+                Dashboard
+            </a>
+            <a href="expenses.jsp" class="nav-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                </svg>
+                Expenses
+            </a>
+            <a href="income.jsp" class="nav-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                </svg>
+                Income
+            </a>
+            <a href="reports.jsp" class="nav-link">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+                Reports
+            </a>
+            <form action="logout" method="post" style="margin: 0;">
+                <button type="submit" class="btn-logout">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <% if (!message.isEmpty()) { %>
+    <div class="alert <%= message.contains("successfully") ? "alert-success" : "alert-error" %>">
+        <span style="font-size: 18px;"><%= message.contains("successfully") ? "✓" : "✗" %></span>
+        <span><%= message %></span>
+    </div>
+    <% } %>
+
+    <div class="card">
+        <h2 style="font-size: 24px; font-weight: 600; color: var(--light); margin-bottom: 24px;">
+            <%= "edit".equals(action) ? "Edit Expense" : "Add New Expense" %>
+        </h2>
+
+        <%
+            Expense editExpense = null;
+            if ("edit".equals(action)) {
+                String editIdStr = request.getParameter("id");
+                if (editIdStr != null) {
+                    int editId = Integer.parseInt(editIdStr);
+                    for (Expense exp : expenses) {
+                        if (exp.getId() == editId) {
+                            editExpense = exp;
+                            break;
                         }
                     }
                 }
-                %>
-                
-                <form method="post" action="expenses.jsp" class="space-y-6">
-                    <input type="hidden" name="action" value="<%= "edit".equals(action) ? "edit" : "add" %>">
-                    <% if (editExpense != null) { %>
-                        <input type="hidden" name="id" value="<%= editExpense.getId() %>">
-                    <% } %>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description <span class="text-red-500">*</span></label>
-                            <input type="text" id="description" name="description" required
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200"
-                                   placeholder="Enter expense description" 
-                                   value="<%= editExpense != null ? editExpense.getDescription() : "" %>">
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <label for="amount" class="block text-sm font-medium text-gray-700">Amount <span class="text-red-500">*</span></label>
-                            <div class="relative">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span class="text-gray-500 text-sm">$</span>
-                                </div>
-                                <input type="number" id="amount" name="amount" step="0.01" required
-                                       class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200"
-                                       placeholder="0.00" 
-                                       value="<%= editExpense != null ? editExpense.getAmount() : "" %>">
-                            </div>
-                        </div>
-                    </div>
+            }
+        %>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-2">
-                            <label for="category" class="block text-sm font-medium text-gray-700">Category <span class="text-red-500">*</span></label>
-                            <select id="category" name="category" required
-                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200 bg-white">
-                                <option value="">Select Category</option>
-                                <option value="Food" <%= editExpense != null && "Food".equals(editExpense.getCategory()) ? "selected" : "" %>>🍕 Food</option>
-                                <option value="Transport" <%= editExpense != null && "Transport".equals(editExpense.getCategory()) ? "selected" : "" %>>🚗 Transport</option>
-                                <option value="Entertainment" <%= editExpense != null && "Entertainment".equals(editExpense.getCategory()) ? "selected" : "" %>>🎬 Entertainment</option>
-                                <option value="Bills" <%= editExpense != null && "Bills".equals(editExpense.getCategory()) ? "selected" : "" %>>📱 Bills</option>
-                                <option value="Healthcare" <%= editExpense != null && "Healthcare".equals(editExpense.getCategory()) ? "selected" : "" %>>🏥 Healthcare</option>
-                                <option value="Shopping" <%= editExpense != null && "Shopping".equals(editExpense.getCategory()) ? "selected" : "" %>>🛍️ Shopping</option>
-                                <option value="Other" <%= editExpense != null && "Other".equals(editExpense.getCategory()) ? "selected" : "" %>>📦 Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="space-y-2">
-                            <label for="date" class="block text-sm font-medium text-gray-700">Date <span class="text-red-500">*</span></label>
-                            <input type="date" id="date" name="date" required
-                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-colors duration-200"
-                                   value="<%= editExpense != null ? editExpense.getDate() : "" %>">
-                        </div>
-                    </div>
-                    
-                    <div class="flex space-x-4">
-                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                            <%= "edit".equals(action) ? "Update Expense" : "Add Expense" %>
-                        </button>
-                        <% if ("edit".equals(action)) { %>
-                            <a href="expenses.jsp" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">Cancel</a>
-                        <% } else { %>
-                            <button type="reset" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">Clear Form</button>
-                        <% } %>
-                    </div>
-                </form>
+        <form method="post" action="expenses.jsp">
+            <input type="hidden" name="action" value="<%= "edit".equals(action) ? "edit" : "add" %>">
+            <% if (editExpense != null) { %>
+            <input type="hidden" name="id" value="<%= editExpense.getId() %>">
+            <% } %>
+
+            <div class="grid grid-cols-2">
+                <div class="form-group">
+                    <label class="form-label" for="description">Description <span style="color: var(--danger);">*</span></label>
+                    <input type="text" id="description" name="description" required class="form-input"
+                           placeholder="Enter expense description"
+                           value="<%= editExpense != null ? editExpense.getDescription() : "" %>">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="amount">Amount <span style="color: var(--danger);">*</span></label>
+                    <input type="number" id="amount" name="amount" step="0.01" required class="form-input"
+                           placeholder="0.00"
+                           value="<%= editExpense != null ? editExpense.getAmount() : "" %>">
+                </div>
             </div>
-        </div>
-        
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h2 class="text-lg font-semibold text-gray-900">Your Expenses</h2>
+
+            <div class="grid grid-cols-2">
+                <div class="form-group">
+                    <label class="form-label" for="category">Category <span style="color: var(--danger);">*</span></label>
+                    <select id="category" name="category" required class="form-input">
+                        <option value="">Select Category</option>
+                        <option value="Food" <%= editExpense != null && "Food".equals(editExpense.getCategory()) ? "selected" : "" %>>🍕 Food</option>
+                        <option value="Transport" <%= editExpense != null && "Transport".equals(editExpense.getCategory()) ? "selected" : "" %>>🚗 Transport</option>
+                        <option value="Entertainment" <%= editExpense != null && "Entertainment".equals(editExpense.getCategory()) ? "selected" : "" %>>🎬 Entertainment</option>
+                        <option value="Bills" <%= editExpense != null && "Bills".equals(editExpense.getCategory()) ? "selected" : "" %>>📱 Bills</option>
+                        <option value="Healthcare" <%= editExpense != null && "Healthcare".equals(editExpense.getCategory()) ? "selected" : "" %>>🏥 Healthcare</option>
+                        <option value="Shopping" <%= editExpense != null && "Shopping".equals(editExpense.getCategory()) ? "selected" : "" %>>🛍️ Shopping</option>
+                        <option value="Other" <%= editExpense != null && "Other".equals(editExpense.getCategory()) ? "selected" : "" %>>📦 Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="date">Date <span style="color: var(--danger);">*</span></label>
+                    <input type="date" id="date" name="date" required class="form-input"
+                           value="<%= editExpense != null ? editExpense.getDate() : "" %>">
+                </div>
             </div>
-            <div class="p-6">
-                <% if (expenses.isEmpty()) { %>
-                    <div class="text-center py-12">
-                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No expenses yet</h3>
-                        <p class="text-gray-500">Start tracking your expenses by adding your first entry above.</p>
-                    </div>
+
+            <div style="display: flex; gap: 16px; margin-top: 24px;">
+                <button type="submit" class="btn btn-danger">
+                    <%= "edit".equals(action) ? "Update Expense" : "Add Expense" %>
+                </button>
+                <% if ("edit".equals(action)) { %>
+                <a href="expenses.jsp" class="btn" style="background: var(--gray); color: white;">Cancel</a>
                 <% } else { %>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="border-b border-gray-200">
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Date</th>
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Description</th>
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Category</th>
-                                    <th class="text-right py-3 px-4 font-medium text-gray-700">Amount</th>
-                                    <th class="text-center py-3 px-4 font-medium text-gray-700">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <%
-                                double total = 0;
-                                for (Expense expense : expenses) {
-                                    total += expense.getAmount();
-                                %>
-                                <tr class="hover:bg-gray-50 transition-colors duration-200">
-                                    <td class="py-3 px-4 text-sm text-gray-900"><%= expense.getDate() %></td>
-                                    <td class="py-3 px-4 text-sm text-gray-900"><%= expense.getDescription() %></td>
-                                    <td class="py-3 px-4">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                            <%= expense.getCategory() %>
-                                        </span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm font-medium text-right text-red-600">$<%= String.format("%.2f", expense.getAmount()) %></td>
-                                    <td class="py-3 px-4 text-center">
-                                        <div class="flex justify-center space-x-2">
-                                            <a href="expenses.jsp?action=edit&id=<%= expense.getId() %>" 
-                                               class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-xs font-medium transition-colors duration-200">
-                                                Edit
-                                            </a>
-                                            <a href="expenses.jsp?action=delete&id=<%= expense.getId() %>" 
-                                               class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-medium transition-colors duration-200"
-                                               onclick="return confirm('Are you sure you want to delete this expense?')">
-                                                Delete
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <% } %>
-                            </tbody>
-                            <tfoot>
-                                <tr class="bg-gray-50 font-semibold">
-                                    <td colspan="3" class="py-3 px-4 text-sm text-gray-900">Total Expenses:</td>
-                                    <td class="py-3 px-4 text-sm font-bold text-right text-red-600">$<%= String.format("%.2f", total) %></td>
-                                    <td></td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                <button type="reset" class="btn" style="background: var(--gray); color: white;">Clear Form</button>
                 <% } %>
             </div>
-        </div>
-    </main>
+        </form>
+    </div>
 
-    <script>
-        <% if (!"edit".equals(action)) { %>
-            document.getElementById('date').valueAsDate = new Date();
+    <div class="card">
+        <h2 style="font-size: 24px; font-weight: 600; color: var(--light); margin-bottom: 20px;">Your Expenses</h2>
+
+        <% if (expenses.isEmpty()) { %>
+        <div class="empty-state">
+            <div style="font-size: 64px; margin-bottom: 16px;">💸</div>
+            <h3>No expenses yet</h3>
+            <p>Start tracking your expenses by adding your first entry above.</p>
+        </div>
+        <% } else { %>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th style="text-align: right;">Amount</th>
+                    <th style="text-align: center;">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                    double total = 0;
+                    for (Expense expense : expenses) {
+                        total += expense.getAmount();
+                %>
+                <tr>
+                    <td><%= expense.getDate() %></td>
+                    <td><%= expense.getDescription() %></td>
+                    <td>
+                                    <span class="badge badge-danger">
+                                        <%= expense.getCategory() %>
+                                    </span>
+                    </td>
+                    <td style="text-align: right; font-weight: 600; color: #fca5a5;">$<%= String.format("%.2f", expense.getAmount()) %></td>
+                    <td style="text-align: center;">
+                        <div style="display: flex; justify-content: center; gap: 8px;">
+                            <a href="expenses.jsp?action=edit&id=<%= expense.getId() %>" class="btn btn-primary" style="padding: 8px 16px; font-size: 13px;">
+                                Edit
+                            </a>
+                            <a href="expenses.jsp?action=delete&id=<%= expense.getId() %>" class="btn btn-danger" style="padding: 8px 16px; font-size: 13px;"
+                               onclick="return confirm('Are you sure you want to delete this expense?')">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+                <tfoot>
+                <tr style="background: rgba(15, 23, 42, 0.5);">
+                    <td colspan="3" style="font-weight: 600;">Total Expenses:</td>
+                    <td style="text-align: right; font-weight: 700; color: #fca5a5;">$<%= String.format("%.2f", total) %></td>
+                    <td></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
         <% } %>
-        
-        setTimeout(() => {
-            document.querySelectorAll('[class*="bg-green-50"], [class*="bg-red-50"]').forEach(alert => {
-                if (alert.textContent.includes('successfully') || alert.textContent.includes('Error')) {
-                    alert.style.opacity = '0';
-                    alert.style.transform = 'translateY(-20px)';
-                    setTimeout(() => alert.remove(), 300);
-                }
-            });
-        }, 5000);
-    </script>
+    </div>
+</div>
+
+<script>
+    <% if (!"edit".equals(action)) { %>
+    document.getElementById('date').valueAsDate = new Date();
+    <% } %>
+</script>
 </body>
 </html>

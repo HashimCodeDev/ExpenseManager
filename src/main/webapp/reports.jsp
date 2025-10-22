@@ -71,173 +71,179 @@ double netBalance = totalIncome - totalExpenses;
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Reports - ExpenseManager</title>
+    <title>Reports - ExpenseFlow</title>
     <%@ include file="components/modern-head.jsp" %>
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <%@ include file="components/modern-nav.jsp" %>
+<body>
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
     
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
-            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h2 class="text-lg font-semibold text-gray-900">Filter Transactions</h2>
+    <div class="container">
+        <nav class="navbar">
+            <div class="logo">
+                <div class="logo-icon">💰</div>
+                <span>ExpenseFlow</span>
             </div>
-            <div class="p-6">
-                <form method="get" action="reports.jsp" class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="space-y-2">
-                        <label for="startDate" class="block text-sm font-medium text-gray-700">Start Date</label>
-                        <input type="date" id="startDate" name="startDate" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
-                               value="<%= startDateStr != null ? startDateStr : "" %>">
-                    </div>
-                    <div class="space-y-2">
-                        <label for="endDate" class="block text-sm font-medium text-gray-700">End Date</label>
-                        <input type="date" id="endDate" name="endDate" 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200"
-                               value="<%= endDateStr != null ? endDateStr : "" %>">
-                    </div>
-                    <div class="space-y-2">
-                        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-                        <select id="category" name="category" 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200 bg-white">
-                            <option value="">All Categories</option>
-                            <option value="Food" <%= "Food".equals(categoryFilter) ? "selected" : "" %>>🍕 Food</option>
-                            <option value="Transport" <%= "Transport".equals(categoryFilter) ? "selected" : "" %>>🚗 Transport</option>
-                            <option value="Entertainment" <%= "Entertainment".equals(categoryFilter) ? "selected" : "" %>>🎬 Entertainment</option>
-                            <option value="Bills" <%= "Bills".equals(categoryFilter) ? "selected" : "" %>>📱 Bills</option>
-                            <option value="Healthcare" <%= "Healthcare".equals(categoryFilter) ? "selected" : "" %>>🏥 Healthcare</option>
-                            <option value="Shopping" <%= "Shopping".equals(categoryFilter) ? "selected" : "" %>>🛍️ Shopping</option>
-                            <option value="Job" <%= "Job".equals(categoryFilter) ? "selected" : "" %>>💼 Job</option>
-                            <option value="Freelance" <%= "Freelance".equals(categoryFilter) ? "selected" : "" %>>💻 Freelance</option>
-                            <option value="Investment" <%= "Investment".equals(categoryFilter) ? "selected" : "" %>>📈 Investment</option>
-                            <option value="Business" <%= "Business".equals(categoryFilter) ? "selected" : "" %>>🏢 Business</option>
-                            <option value="Gift" <%= "Gift".equals(categoryFilter) ? "selected" : "" %>>🎁 Gift</option>
-                            <option value="Other" <%= "Other".equals(categoryFilter) ? "selected" : "" %>>📦 Other</option>
-                        </select>
-                    </div>
-                    <div class="flex items-end space-x-3">
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Filter
-                        </button>
-                        <a href="reports.jsp" class="bg-gray-600 hover:bg-gray-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200">
-                            Clear
-                        </a>
-                    </div>
+            <div class="nav-links">
+                <a href="dashboard.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="expenses.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                    Expenses
+                </a>
+                <a href="income.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
+                    </svg>
+                    Income
+                </a>
+                <a href="reports.jsp" class="nav-link">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                    Reports
+                </a>
+                <form action="logout" method="post" style="margin: 0;">
+                    <button type="submit" class="btn-logout">Logout</button>
                 </form>
             </div>
+        </nav>
+        
+        <div class="card animate-fade-in">
+            <h2 style="font-size: 20px; font-weight: 600; color: var(--light); margin-bottom: 24px;">Filter Transactions</h2>
+            
+            <form method="get" action="reports.jsp" class="grid grid-cols-2" style="gap: 24px;">
+                <div class="form-group">
+                    <label class="form-label" for="startDate">Start Date</label>
+                    <input type="date" id="startDate" name="startDate" class="form-input"
+                           value="<%= startDateStr != null ? startDateStr : "" %>">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="endDate">End Date</label>
+                    <input type="date" id="endDate" name="endDate" class="form-input"
+                           value="<%= endDateStr != null ? endDateStr : "" %>">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="category">Category</label>
+                    <select id="category" name="category" class="form-input">
+                        <option value="">All Categories</option>
+                        <option value="Food" <%= "Food".equals(categoryFilter) ? "selected" : "" %>>🍕 Food</option>
+                        <option value="Transport" <%= "Transport".equals(categoryFilter) ? "selected" : "" %>>🚗 Transport</option>
+                        <option value="Entertainment" <%= "Entertainment".equals(categoryFilter) ? "selected" : "" %>>🎬 Entertainment</option>
+                        <option value="Bills" <%= "Bills".equals(categoryFilter) ? "selected" : "" %>>📱 Bills</option>
+                        <option value="Healthcare" <%= "Healthcare".equals(categoryFilter) ? "selected" : "" %>>🏥 Healthcare</option>
+                        <option value="Shopping" <%= "Shopping".equals(categoryFilter) ? "selected" : "" %>>🛍️ Shopping</option>
+                        <option value="Job" <%= "Job".equals(categoryFilter) ? "selected" : "" %>>💼 Job</option>
+                        <option value="Freelance" <%= "Freelance".equals(categoryFilter) ? "selected" : "" %>>💻 Freelance</option>
+                        <option value="Investment" <%= "Investment".equals(categoryFilter) ? "selected" : "" %>>📈 Investment</option>
+                        <option value="Business" <%= "Business".equals(categoryFilter) ? "selected" : "" %>>🏢 Business</option>
+                        <option value="Gift" <%= "Gift".equals(categoryFilter) ? "selected" : "" %>>🎁 Gift</option>
+                        <option value="Other" <%= "Other".equals(categoryFilter) ? "selected" : "" %>>📦 Other</option>
+                    </select>
+                </div>
+                <div style="display: flex; align-items: end; gap: 16px;">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="reports.jsp" class="btn" style="background: var(--gray); color: white;">Clear</a>
+                </div>
+            </form>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-green-100 text-sm font-medium">Total Income</p>
-                        <p class="text-3xl font-bold">$<%= String.format("%.2f", totalIncome) %></p>
-                    </div>
-                    <div class="bg-white/20 p-3 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                        </svg>
-                    </div>
+        <div class="stats-grid">
+            <div class="stat-card stat-income animate-fade-in">
+                <div class="stat-info">
+                    <h3>Total Income</h3>
+                    <p style="color: white;">$<%= String.format("%.2f", totalIncome) %></p>
                 </div>
+                <div class="stat-icon" style="background: rgba(255, 255, 255, 0.2);">💰</div>
             </div>
 
-            <div class="bg-gradient-to-r from-red-500 to-red-600 rounded-xl p-6 text-white shadow-lg">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-red-100 text-sm font-medium">Total Expenses</p>
-                        <p class="text-3xl font-bold">$<%= String.format("%.2f", totalExpenses) %></p>
-                    </div>
-                    <div class="bg-white/20 p-3 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
-                        </svg>
-                    </div>
+            <div class="stat-card stat-expense animate-fade-in">
+                <div class="stat-info">
+                    <h3>Total Expenses</h3>
+                    <p style="color: white;">$<%= String.format("%.2f", totalExpenses) %></p>
                 </div>
+                <div class="stat-icon" style="background: rgba(255, 255, 255, 0.2);">💸</div>
             </div>
 
-            <div class="bg-gradient-to-r from-<%= netBalance >= 0 ? "blue-500 to-blue-600" : "orange-500 to-orange-600" %> rounded-xl p-6 text-white shadow-lg">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-white/80 text-sm font-medium">Net Balance</p>
-                        <p class="text-3xl font-bold">$<%= String.format("%.2f", netBalance) %></p>
-                    </div>
-                    <div class="bg-white/20 p-3 rounded-lg">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="<%= netBalance >= 0 ? "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" : "M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" %>"/>
-                        </svg>
-                    </div>
+            <div class="stat-card <%= netBalance >= 0 ? "stat-balance" : "stat-expense" %> animate-fade-in">
+                <div class="stat-info">
+                    <h3>Net Balance</h3>
+                    <p style="color: white;">$<%= String.format("%.2f", netBalance) %></p>
                 </div>
+                <div class="stat-icon" style="background: rgba(255, 255, 255, 0.2);"><%= netBalance >= 0 ? "📈" : "📉" %></div>
             </div>
         </div>
         
-        <div class="text-center mb-8">
+        <div style="text-align: center; margin-bottom: 32px;">
             <a href="export.jsp?<%= request.getQueryString() != null ? request.getQueryString() : "" %>" 
-               class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+               class="btn btn-primary">
                 📄 Export to CSV
             </a>
         </div>
         
-        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50">
-                <h2 class="text-lg font-semibold text-gray-900">All Transactions</h2>
-            </div>
-            <div class="p-6">
-                <% if (allTransactions.isEmpty()) { %>
-                    <div class="text-center py-12">
-                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                        </svg>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">No transactions found</h3>
-                        <p class="text-gray-500">Try adjusting your filters or add some transactions to see data here.</p>
-                    </div>
-                <% } else { %>
-                    <div class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="border-b border-gray-200">
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Date</th>
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Description</th>
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Category</th>
-                                    <th class="text-left py-3 px-4 font-medium text-gray-700">Type</th>
-                                    <th class="text-right py-3 px-4 font-medium text-gray-700">Amount</th>
-                                    <th class="text-right py-3 px-4 font-medium text-gray-700">Running Balance</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200">
-                                <%
-                                for (Map<String, Object> transaction : allTransactions) {
-                                    double amount = (Double) transaction.get("amount");
-                                    double balance = (Double) transaction.get("balance");
-                                    boolean isIncome = transaction.get("type").toString().equals("Income");
-                                %>
-                                <tr class="hover:bg-gray-50 transition-colors duration-200">
-                                    <td class="py-3 px-4 text-sm text-gray-900"><%= transaction.get("date") %></td>
-                                    <td class="py-3 px-4 text-sm text-gray-900"><%= transaction.get("description") %></td>
-                                    <td class="py-3 px-4">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= isIncome ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %>">
-                                            <%= transaction.get("category") %>
-                                        </span>
-                                    </td>
-                                    <td class="py-3 px-4">
-                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium <%= isIncome ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800" %>">
-                                            <%= transaction.get("type") %>
-                                        </span>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm font-medium text-right <%= amount >= 0 ? "text-green-600" : "text-red-600" %>">
-                                        <%= amount >= 0 ? "+" : "" %>$<%= String.format("%.2f", Math.abs(amount)) %>
-                                    </td>
-                                    <td class="py-3 px-4 text-sm font-bold text-right <%= balance >= 0 ? "text-green-600" : "text-red-600" %>">
-                                        $<%= String.format("%.2f", balance) %>
-                                    </td>
-                                </tr>
-                                <% } %>
-                            </tbody>
-                        </table>
-                    </div>
-                <% } %>
-            </div>
+        <div class="card animate-fade-in">
+            <h2 style="font-size: 20px; font-weight: 600; color: var(--light); margin-bottom: 20px;">All Transactions</h2>
+            
+            <% if (allTransactions.isEmpty()) { %>
+                <div style="text-align: center; padding: 48px 0;">
+                    <div style="font-size: 64px; margin-bottom: 16px;">📊</div>
+                    <h3 style="font-size: 18px; font-weight: 500; color: var(--light); margin-bottom: 8px;">No transactions found</h3>
+                    <p style="color: var(--gray);">Try adjusting your filters or add some transactions to see data here.</p>
+                </div>
+            <% } else { %>
+                <div style="overflow-x: auto;">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Type</th>
+                                <th style="text-align: right;">Amount</th>
+                                <th style="text-align: right;">Running Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%
+                            for (Map<String, Object> transaction : allTransactions) {
+                                double amount = (Double) transaction.get("amount");
+                                double balance = (Double) transaction.get("balance");
+                                boolean isIncome = transaction.get("type").toString().equals("Income");
+                            %>
+                            <tr>
+                                <td><%= transaction.get("date") %></td>
+                                <td><%= transaction.get("description") %></td>
+                                <td>
+                                    <span class="badge <%= isIncome ? "badge-success" : "badge-danger" %>">
+                                        <%= transaction.get("category") %>
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge <%= isIncome ? "badge-success" : "badge-danger" %>">
+                                        <%= transaction.get("type") %>
+                                    </span>
+                                </td>
+                                <td style="text-align: right; font-weight: 600; color: <%= amount >= 0 ? "var(--success)" : "var(--error)" %>;">
+                                    <%= amount >= 0 ? "+" : "" %>$<%= String.format("%.2f", Math.abs(amount)) %>
+                                </td>
+                                <td style="text-align: right; font-weight: 700; color: <%= balance >= 0 ? "var(--success)" : "var(--error)" %>;">
+                                    $<%= String.format("%.2f", balance) %>
+                                </td>
+                            </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            <% } %>
         </div>
-    </main>
+    </div>
 </body>
 </html>
