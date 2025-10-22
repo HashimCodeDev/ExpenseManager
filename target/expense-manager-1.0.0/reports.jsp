@@ -71,14 +71,453 @@ double netBalance = totalIncome - totalExpenses;
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reports - ExpenseFlow</title>
-    <%@ include file="components/modern-head.jsp" %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --card-bg: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #3b82f6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(to bottom, #0f172a, #1e293b);
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: var(--primary);
+            top: -200px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 350px;
+            height: 350px;
+            background: var(--accent);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: var(--secondary);
+            top: 50%;
+            left: 50%;
+            animation-delay: -5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 16px 24px;
+            margin-bottom: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--light);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            color: var(--light);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-link:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .card:nth-child(2) { animation-delay: 0.1s; }
+        .card:nth-child(3) { animation-delay: 0.2s; }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--light);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 15px;
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        select.form-input {
+            cursor: pointer;
+        }
+
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .stat-income {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .stat-expense {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .stat-balance {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .stat-info h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .stat-info p {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        /* Table */
+        .table-container {
+            overflow-x: auto;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            text-align: left;
+            padding: 16px;
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background 0.3s;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            padding: 16px;
+            font-size: 14px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: rgba(16, 185, 129, 0.1);
+            color: #6ee7b7;
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+
+        .empty-state p {
+            color: var(--gray);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .grid-cols-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: scroll;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="bg-animation">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-    </div>
+<div class="bg-animation">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+</div>
     
     <div class="container">
         <nav class="navbar">
@@ -117,10 +556,11 @@ double netBalance = totalIncome - totalExpenses;
             </div>
         </nav>
         
-        <div class="card animate-fade-in">
-            <h2 style="font-size: 20px; font-weight: 600; color: var(--light); margin-bottom: 24px;">Filter Transactions</h2>
-            
-            <form method="get" action="reports.jsp" class="grid grid-cols-2" style="gap: 24px;">
+    <div class="card">
+        <h2 style="font-size: 24px; font-weight: 600; color: var(--light); margin-bottom: 24px;">Filter Transactions</h2>
+        
+        <form method="get" action="reports.jsp">
+            <div class="grid grid-cols-3">
                 <div class="form-group">
                     <label class="form-label" for="startDate">Start Date</label>
                     <input type="date" id="startDate" name="startDate" class="form-input"
@@ -149,12 +589,13 @@ double netBalance = totalIncome - totalExpenses;
                         <option value="Other" <%= "Other".equals(categoryFilter) ? "selected" : "" %>>📦 Other</option>
                     </select>
                 </div>
-                <div style="display: flex; align-items: end; gap: 16px;">
-                    <button type="submit" class="btn btn-primary">Filter</button>
-                    <a href="reports.jsp" class="btn" style="background: var(--gray); color: white;">Clear</a>
-                </div>
-            </form>
-        </div>
+            </div>
+            <div style="display: flex; gap: 16px; margin-top: 24px;">
+                <button type="submit" class="btn btn-primary">Filter</button>
+                <a href="reports.jsp" class="btn" style="background: var(--gray); color: white;">Clear</a>
+            </div>
+        </form>
+    </div>
         
         <div class="stats-grid">
             <div class="stat-card stat-income animate-fade-in">
@@ -182,68 +623,68 @@ double netBalance = totalIncome - totalExpenses;
             </div>
         </div>
         
-        <div style="text-align: center; margin-bottom: 32px;">
-            <a href="export.jsp?<%= request.getQueryString() != null ? request.getQueryString() : "" %>" 
-               class="btn btn-primary">
-                📄 Export to CSV
-            </a>
-        </div>
+    <div style="text-align: center; margin-bottom: 32px;">
+        <a href="export.jsp?<%= request.getQueryString() != null ? request.getQueryString() : "" %>" 
+           class="btn btn-primary">
+            📄 Export to CSV
+        </a>
+    </div>
         
-        <div class="card animate-fade-in">
-            <h2 style="font-size: 20px; font-weight: 600; color: var(--light); margin-bottom: 20px;">All Transactions</h2>
-            
-            <% if (allTransactions.isEmpty()) { %>
-                <div style="text-align: center; padding: 48px 0;">
-                    <div style="font-size: 64px; margin-bottom: 16px;">📊</div>
-                    <h3 style="font-size: 18px; font-weight: 500; color: var(--light); margin-bottom: 8px;">No transactions found</h3>
-                    <p style="color: var(--gray);">Try adjusting your filters or add some transactions to see data here.</p>
-                </div>
-            <% } else { %>
-                <div style="overflow-x: auto;">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Type</th>
-                                <th style="text-align: right;">Amount</th>
-                                <th style="text-align: right;">Running Balance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                            for (Map<String, Object> transaction : allTransactions) {
-                                double amount = (Double) transaction.get("amount");
-                                double balance = (Double) transaction.get("balance");
-                                boolean isIncome = transaction.get("type").toString().equals("Income");
-                            %>
-                            <tr>
-                                <td><%= transaction.get("date") %></td>
-                                <td><%= transaction.get("description") %></td>
-                                <td>
-                                    <span class="badge <%= isIncome ? "badge-success" : "badge-danger" %>">
-                                        <%= transaction.get("category") %>
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge <%= isIncome ? "badge-success" : "badge-danger" %>">
-                                        <%= transaction.get("type") %>
-                                    </span>
-                                </td>
-                                <td style="text-align: right; font-weight: 600; color: <%= amount >= 0 ? "var(--success)" : "var(--error)" %>;">
-                                    <%= amount >= 0 ? "+" : "" %>$<%= String.format("%.2f", Math.abs(amount)) %>
-                                </td>
-                                <td style="text-align: right; font-weight: 700; color: <%= balance >= 0 ? "var(--success)" : "var(--error)" %>;">
-                                    $<%= String.format("%.2f", balance) %>
-                                </td>
-                            </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
-                </div>
-            <% } %>
+    <div class="card">
+        <h2 style="font-size: 24px; font-weight: 600; color: var(--light); margin-bottom: 20px;">All Transactions</h2>
+        
+        <% if (allTransactions.isEmpty()) { %>
+        <div class="empty-state">
+            <div style="font-size: 64px; margin-bottom: 16px;">📊</div>
+            <h3>No transactions found</h3>
+            <p>Try adjusting your filters or add some transactions to see data here.</p>
         </div>
+        <% } else { %>
+        <div class="table-container">
+            <table>
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Type</th>
+                    <th style="text-align: right;">Amount</th>
+                    <th style="text-align: right;">Running Balance</th>
+                </tr>
+                </thead>
+                <tbody>
+                <%
+                for (Map<String, Object> transaction : allTransactions) {
+                    double amount = (Double) transaction.get("amount");
+                    double balance = (Double) transaction.get("balance");
+                    boolean isIncome = transaction.get("type").toString().equals("Income");
+                %>
+                <tr>
+                    <td><%= transaction.get("date") %></td>
+                    <td><%= transaction.get("description") %></td>
+                    <td>
+                        <span class="badge <%= isIncome ? "badge-success" : "badge-danger" %>">
+                            <%= transaction.get("category") %>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge <%= isIncome ? "badge-success" : "badge-danger" %>">
+                            <%= transaction.get("type") %>
+                        </span>
+                    </td>
+                    <td style="text-align: right; font-weight: 600; color: <%= amount >= 0 ? "#6ee7b7" : "#fca5a5" %>;">
+                        <%= amount >= 0 ? "+" : "" %>$<%= String.format("%.2f", Math.abs(amount)) %>
+                    </td>
+                    <td style="text-align: right; font-weight: 700; color: <%= balance >= 0 ? "#6ee7b7" : "#fca5a5" %>;">
+                        $<%= String.format("%.2f", balance) %>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+    </div>
     </div>
 </body>
 </html>
